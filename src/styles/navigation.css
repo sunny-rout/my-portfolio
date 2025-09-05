@@ -29,7 +29,9 @@
 }
 
 .logo-image {
-  height: 70px; 
+  height: 64px;
+  width: 64px;
+  margin-right: 6px;
   vertical-align: middle;
 }
 

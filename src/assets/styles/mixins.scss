@@ -240,3 +240,15 @@ $breakpoints: (
     transform: translateY(-5px);
   }
 }
+
+// Mobile menu overlay fix
+@media (max-width: 768px) {
+  body.menu-open {
+    overflow: hidden;
+  }
+  
+  .app-header__menu.active {
+    left: 0 !important;
+  }
+}
+

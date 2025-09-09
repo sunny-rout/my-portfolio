@@ -116,6 +116,10 @@ onMounted(() => {
   flex-direction: column;
   background: var(--color-background);
   color: var(--color-text-primary);
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
   
   &__skip-link {
     position: absolute;
@@ -137,6 +141,10 @@ onMounted(() => {
   
   &__main {
     flex: 1;
+    padding-top: 70px;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
     
     &:focus {
       outline: 2px solid var(--color-primary);

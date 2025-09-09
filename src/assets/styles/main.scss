@@ -21,11 +21,34 @@ html {
   background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
   margin: 0;
   padding: 0;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
+}
+
+// Fix for mobile viewport height issues
+@supports (height: 100svh) {
+  .hero-section {
+    min-height: 100svh;
+  }
+}
+
+// Smooth scrolling with offset for fixed header
+html {
+  scroll-padding-top: 80px;
 }
 
 *,

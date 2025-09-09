@@ -6,12 +6,12 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-      '@components': resolve(__dirname, 'src/components'),
-      '@composables': resolve(__dirname, 'src/composables'),
-      '@assets': resolve(__dirname, 'src/assets'),
-      '@stores': resolve(__dirname, 'src/stores'),
-      '@data': resolve(__dirname, 'src/data')
+      '@': resolve(__dirname, './src'),
+      '@components': resolve(__dirname, './src/components'),
+      '@composables': resolve(__dirname, './src/composables'),
+      '@assets': resolve(__dirname, './src/assets'),
+      '@stores': resolve(__dirname, './src/stores'),
+      '@data': resolve(__dirname, './src/data')
     }
   },
   css: {

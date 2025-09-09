@@ -54,6 +54,16 @@ const handleScroll = () => {
 }
 
 const handleNavigation = (sectionId) => {
+  const element = document.getElementById(sectionId)
+  if (element) {
+    const headerOffset = 80
+    const elementPosition = element.offsetTop - headerOffset
+    
+    window.scrollTo({
+      top: elementPosition,
+      behavior: 'smooth'
+    })
+  }
   emit('navigate', sectionId)
   isMobileMenuOpen.value = false
 }
@@ -82,6 +92,7 @@ onUnmounted(() => {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  will-change: transform;
   
   &--scrolled {
     background: rgba(255, 255, 255, 0.98);

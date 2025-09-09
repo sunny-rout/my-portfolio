@@ -137,6 +137,7 @@ onMounted(() => {
   
   &__main {
     flex: 1;
+    padding-top: 70px;
     
     &:focus {
       outline: 2px solid var(--color-primary);

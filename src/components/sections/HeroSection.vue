@@ -121,13 +121,14 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .hero-section {
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   position: relative;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   overflow: hidden;
+  touch-action: pan-y;
   
   &::before {
     content: '';

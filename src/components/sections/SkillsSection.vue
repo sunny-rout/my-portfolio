@@ -83,6 +83,7 @@ onMounted(() => {
 .skills-section {
   padding: 5rem 0;
   background: white;
+  scroll-margin-top: 80px;
   
   &__container {
     max-width: 1200px;

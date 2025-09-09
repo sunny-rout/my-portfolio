@@ -14,7 +14,7 @@
             <p class="about-section__paragraph">
               As a seasoned Software Engineer with over <strong>{{ personalData.yearsExperience }}+ years of experience</strong>, 
               I excel at driving change and bridging the gap between technical teams and business goals. 
-              My focus isn't just on code; it's on <strong>orchestrating projects, optimizing processes</strong>, 
+              My focus isn't just on code; it\'s on <strong>orchestrating projects, optimizing processes</strong>, 
               and mentoring teams to deliver high-impact, scalable solutions that drive business value.
             </p>
             

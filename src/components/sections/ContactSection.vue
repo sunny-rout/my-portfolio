@@ -208,16 +208,28 @@ const handleSubmit = async () => {
   padding: 5rem 0;
   background: white;
   scroll-margin-top: 80px;
+  width: 100%;
+  overflow-x: hidden;
   
   &__container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    
+    @media (max-width: 480px) {
+      padding: 0 1rem;
+    }
   }
   
   &__header {
     text-align: center;
     margin-bottom: 4rem;
+    
+    @media (max-width: 480px) {
+      margin-bottom: 3rem;
+    }
   }
   
   &__heading {
@@ -226,6 +238,8 @@ const handleSubmit = async () => {
     color: #1e293b;
     margin-bottom: 1rem;
     position: relative;
+    word-wrap: break-word;
+    hyphens: auto;
     
     &::after {
       content: '';
@@ -245,16 +259,26 @@ const handleSubmit = async () => {
     color: #64748b;
     max-width: 600px;
     margin: 0 auto;
+    word-wrap: break-word;
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
   }
   
   &__content {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 4rem;
+    width: 100%;
     
     @media (max-width: 968px) {
       grid-template-columns: 1fr;
       gap: 3rem;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 2rem;
     }
   }
   
@@ -263,12 +287,28 @@ const handleSubmit = async () => {
     padding: 2.5rem;
     border-radius: 16px;
     height: fit-content;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    
+    @media (max-width: 768px) {
+      padding: 2rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 1.5rem;
+    }
     
     &-heading {
       font-size: 1.5rem;
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 2rem;
+      word-wrap: break-word;
+      
+      @media (max-width: 480px) {
+        font-size: 1.3rem;
+      }
     }
     
     &-list {
@@ -279,9 +319,14 @@ const handleSubmit = async () => {
       display: flex;
       gap: 1rem;
       margin-bottom: 1.5rem;
+      min-width: 0;
       
       &:last-child {
         margin-bottom: 0;
+      }
+      
+      @media (max-width: 480px) {
+        gap: 0.75rem;
       }
     }
     
@@ -296,11 +341,18 @@ const handleSubmit = async () => {
       align-items: center;
       justify-content: center;
       font-size: 1.1rem;
+      
+      @media (max-width: 480px) {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
     }
     
     &-details {
       flex: 1;
       padding-top: 0.25rem;
+      min-width: 0;
     }
     
     &-label {
@@ -309,12 +361,15 @@ const handleSubmit = async () => {
       color: #64748b;
       margin-bottom: 0.25rem;
       font-weight: 500;
+      word-wrap: break-word;
     }
     
     &-value {
       color: #1e293b;
       font-weight: 600;
       text-decoration: none;
+      word-wrap: break-word;
+      hyphens: auto;
       
       &:hover {
         color: #3b82f6;
@@ -328,11 +383,16 @@ const handleSubmit = async () => {
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 1rem;
+      
+      @media (max-width: 480px) {
+        font-size: 1.1rem;
+      }
     }
     
     &-links {
       display: flex;
       gap: 1rem;
+      flex-wrap: wrap;
     }
     
     &-link {
@@ -349,11 +409,17 @@ const handleSubmit = async () => {
       border: 2px solid var(--social-color, #e2e8f0);
       font-weight: 500;
       transition: all 0.3s ease;
+      flex-shrink: 0;
       
       &:hover {
         background: var(--social-color, #3b82f6);
         color: white;
         transform: translateY(-2px);
+      }
+      
+      @media (max-width: 480px) {
+        width: 40px;
+        height: 40px;
       }
     }
   }
@@ -363,6 +429,17 @@ const handleSubmit = async () => {
     padding: 2.5rem;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    
+    @media (max-width: 768px) {
+      padding: 2rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 1.5rem;
+    }
   }
   
   &__form-heading {
@@ -370,18 +447,25 @@ const handleSubmit = async () => {
     font-weight: 600;
     color: #1e293b;
     margin-bottom: 2rem;
+    word-wrap: break-word;
+    
+    @media (max-width: 480px) {
+      font-size: 1.3rem;
+    }
   }
   
   &__form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
   }
   
   &__form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
+    width: 100%;
     
     @media (max-width: 640px) {
       grid-template-columns: 1fr;
@@ -391,6 +475,8 @@ const handleSubmit = async () => {
   &__form-group {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    min-width: 0;
   }
   
   &__form-label {
@@ -398,6 +484,7 @@ const handleSubmit = async () => {
     font-weight: 500;
     color: #374151;
     margin-bottom: 0.5rem;
+    word-wrap: break-word;
   }
   
   &__form-input,
@@ -407,6 +494,9 @@ const handleSubmit = async () => {
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
     
     &:focus {
       outline: none;
@@ -429,6 +519,7 @@ const handleSubmit = async () => {
     color: #ef4444;
     font-size: 0.8rem;
     margin-top: 0.25rem;
+    word-wrap: break-word;
   }
   
   &__form-submit {
@@ -445,6 +536,10 @@ const handleSubmit = async () => {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    white-space: nowrap;
     
     &:hover:not(:disabled) {
       background: linear-gradient(135deg, #2563eb, #1e40af);
@@ -467,6 +562,7 @@ const handleSubmit = async () => {
     border-radius: 8px;
     font-size: 0.9rem;
     font-weight: 500;
+    word-wrap: break-word;
     
     &--success {
       background: #dcfce7;

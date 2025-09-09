@@ -159,16 +159,28 @@ onMounted(() => {
   padding: 5rem 0;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   scroll-margin-top: 80px;
+  width: 100%;
+  overflow-x: hidden;
   
   &__container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    
+    @media (max-width: 480px) {
+      padding: 0 1rem;
+    }
   }
   
   &__header {
     text-align: center;
     margin-bottom: 4rem;
+    
+    @media (max-width: 480px) {
+      margin-bottom: 3rem;
+    }
   }
   
   &__heading {
@@ -177,6 +189,8 @@ onMounted(() => {
     color: #1e293b;
     margin-bottom: 1rem;
     position: relative;
+    word-wrap: break-word;
+    hyphens: auto;
     
     &::after {
       content: '';
@@ -196,6 +210,11 @@ onMounted(() => {
     color: #64748b;
     max-width: 600px;
     margin: 0 auto;
+    word-wrap: break-word;
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
   }
   
   &__content {
@@ -203,10 +222,15 @@ onMounted(() => {
     grid-template-columns: 2fr 1fr;
     gap: 4rem;
     align-items: start;
+    width: 100%;
     
     @media (max-width: 968px) {
       grid-template-columns: 1fr;
       gap: 3rem;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 2rem;
     }
   }
   
@@ -215,6 +239,17 @@ onMounted(() => {
     padding: 3rem;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    
+    @media (max-width: 768px) {
+      padding: 2rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 1.5rem;
+    }
   }
   
   &__intro {
@@ -226,6 +261,8 @@ onMounted(() => {
     line-height: 1.7;
     color: #475569;
     margin-bottom: 1.5rem;
+    word-wrap: break-word;
+    hyphens: auto;
     
     &:last-child {
       margin-bottom: 0;
@@ -234,6 +271,11 @@ onMounted(() => {
     strong {
       color: #1e293b;
       font-weight: 600;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1rem;
+      line-height: 1.6;
     }
   }
   
@@ -245,6 +287,10 @@ onMounted(() => {
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 1rem;
+      
+      @media (max-width: 480px) {
+        font-size: 1.2rem;
+      }
     }
     
     &-list {
@@ -259,9 +305,16 @@ onMounted(() => {
     align-items: flex-start;
     gap: 1rem;
     margin-bottom: 1rem;
+    word-wrap: break-word;
+    min-width: 0;
     
     &:last-child {
       margin-bottom: 0;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 0.75rem;
+      font-size: 0.95rem;
     }
   }
   
@@ -281,6 +334,10 @@ onMounted(() => {
   
   &__actions {
     margin-top: 2rem;
+    
+    @media (max-width: 480px) {
+      text-align: center;
+    }
   }
   
   &__resume-btn {
@@ -296,10 +353,17 @@ onMounted(() => {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
     
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    }
+    
+    @media (max-width: 480px) {
+      width: 100%;
+      justify-content: center;
+      max-width: 280px;
     }
   }
   
@@ -307,6 +371,7 @@ onMounted(() => {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+    width: 100%;
     
     @media (max-width: 968px) {
       grid-template-columns: repeat(4, 1fr);
@@ -314,6 +379,11 @@ onMounted(() => {
     
     @media (max-width: 640px) {
       grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 1rem;
     }
   }
   
@@ -324,6 +394,9 @@ onMounted(() => {
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
     
     &:hover {
       transform: translateY(-5px);
@@ -333,6 +406,14 @@ onMounted(() => {
     &--animated {
       animation: fadeInUp 0.6s ease-out;
     }
+    
+    @media (max-width: 640px) {
+      padding: 1.5rem 1rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 1.25rem 0.75rem;
+    }
   }
   
   &__stat-number {
@@ -341,6 +422,15 @@ onMounted(() => {
     color: #3b82f6;
     margin-bottom: 0.5rem;
     line-height: 1;
+    word-wrap: break-word;
+    
+    @media (max-width: 640px) {
+      font-size: 2rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
+    }
   }
   
   &__stat-label {
@@ -349,6 +439,13 @@ onMounted(() => {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    word-wrap: break-word;
+    hyphens: auto;
+    
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+      letter-spacing: 0.3px;
+    }
   }
 }
 

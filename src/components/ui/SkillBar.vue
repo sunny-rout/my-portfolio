@@ -38,10 +38,17 @@ const props = defineProps({
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
   
   &:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.25rem;
   }
   
   &__info {
@@ -49,6 +56,14 @@ const props = defineProps({
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+    width: 100%;
+    min-width: 0;
+    
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
   }
   
   &__name {
@@ -57,26 +72,43 @@ const props = defineProps({
     gap: 0.75rem;
     font-weight: 600;
     color: #1e293b;
+    min-width: 0;
+    word-wrap: break-word;
+    
+    @media (max-width: 480px) {
+      font-size: 0.95rem;
+      gap: 0.5rem;
+    }
   }
   
   &__icon {
     font-size: 1.1rem;
     color: var(--skill-color, #3b82f6);
+    flex-shrink: 0;
   }
   
   &__meta {
     display: flex;
     gap: 1rem;
     font-size: 0.9rem;
+    flex-shrink: 0;
+    
+    @media (max-width: 480px) {
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      align-self: flex-end;
+    }
   }
   
   &__years {
     color: #64748b;
+    white-space: nowrap;
   }
   
   &__level {
     color: var(--skill-color, #3b82f6);
     font-weight: 600;
+    white-space: nowrap;
   }
   
   &__progress {
@@ -84,6 +116,7 @@ const props = defineProps({
     background: #e2e8f0;
     border-radius: 4px;
     overflow: hidden;
+    width: 100%;
   }
   
   &__fill {
@@ -93,6 +126,7 @@ const props = defineProps({
     width: 0%;
     transition: width 1.5s ease-out;
     position: relative;
+    min-width: 0;
     
     &--animate {
       width: var(--target-width, 0%);

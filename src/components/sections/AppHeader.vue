@@ -93,6 +93,9 @@ onUnmounted(() => {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   will-change: transform;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   
   &--scrolled {
     background: rgba(255, 255, 255, 0.98);
@@ -107,6 +110,12 @@ onUnmounted(() => {
     align-items: center;
     justify-content: space-between;
     height: 70px;
+    width: 100%;
+    box-sizing: border-box;
+    
+    @media (max-width: 480px) {
+      padding: 0 1rem;
+    }
   }
   
   &__brand {
@@ -126,6 +135,7 @@ onUnmounted(() => {
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
+    flex-shrink: 0;
     
     &:hover {
       transform: translateY(-2px);
@@ -139,6 +149,15 @@ onUnmounted(() => {
     margin: 0;
     padding: 0;
     gap: 1rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
     
     @media (max-width: 768px) {
       position: fixed;
@@ -152,6 +171,9 @@ onUnmounted(() => {
       transform: translateY(-100%);
       opacity: 0;
       transition: all 0.3s ease;
+      overflow-x: visible;
+      max-height: calc(100vh - 70px);
+      overflow-y: auto;
       
       &--open {
         transform: translateY(0);
@@ -162,6 +184,7 @@ onUnmounted(() => {
   
   &__item {
     margin: 0;
+    flex-shrink: 0;
   }
   
   &__link {
@@ -174,6 +197,12 @@ onUnmounted(() => {
     border-radius: 8px;
     transition: all 0.3s ease;
     position: relative;
+    white-space: nowrap;
+    min-width: 0;
+    
+    @media (max-width: 900px) and (min-width: 769px) {
+      padding: 0.75rem 1rem;
+    }
     
     &:hover {
       color: #3b82f6;
@@ -188,17 +217,23 @@ onUnmounted(() => {
     @media (max-width: 768px) {
       justify-content: center;
       padding: 1rem;
+      width: 100%;
     }
   }
   
   &__link-icon {
     margin-right: 0.5rem;
     font-size: 1rem;
+    flex-shrink: 0;
   }
   
   &__link-text {
     @media (max-width: 900px) and (min-width: 769px) {
       display: none;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.9rem;
     }
   }
   

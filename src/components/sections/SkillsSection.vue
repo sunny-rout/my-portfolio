@@ -84,16 +84,28 @@ onMounted(() => {
   padding: 5rem 0;
   background: white;
   scroll-margin-top: 80px;
+  width: 100%;
+  overflow-x: hidden;
   
   &__container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    
+    @media (max-width: 480px) {
+      padding: 0 1rem;
+    }
   }
   
   &__header {
     text-align: center;
     margin-bottom: 4rem;
+    
+    @media (max-width: 480px) {
+      margin-bottom: 3rem;
+    }
   }
   
   &__heading {
@@ -102,6 +114,8 @@ onMounted(() => {
     color: #1e293b;
     margin-bottom: 1rem;
     position: relative;
+    word-wrap: break-word;
+    hyphens: auto;
     
     &::after {
       content: '';
@@ -121,11 +135,21 @@ onMounted(() => {
     color: #64748b;
     max-width: 600px;
     margin: 0 auto;
+    word-wrap: break-word;
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
   }
   
   &__content {
     display: grid;
     gap: 4rem;
+    width: 100%;
+    
+    @media (max-width: 480px) {
+      gap: 3rem;
+    }
   }
   
   &__category {
@@ -133,6 +157,17 @@ onMounted(() => {
     padding: 2.5rem;
     border-radius: 16px;
     border: 1px solid #e2e8f0;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    
+    @media (max-width: 768px) {
+      padding: 2rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 1.5rem;
+    }
     
     &-heading {
       display: flex;
@@ -142,11 +177,19 @@ onMounted(() => {
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 2rem;
+      word-wrap: break-word;
+      min-width: 0;
+      
+      @media (max-width: 480px) {
+        font-size: 1.3rem;
+        gap: 0.75rem;
+      }
     }
     
     &-icon {
       color: #3b82f6;
       font-size: 1.3rem;
+      flex-shrink: 0;
     }
   }
   
@@ -154,10 +197,20 @@ onMounted(() => {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
+    width: 100%;
+    
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 1rem;
+    }
   }
   
   &__specializations {
     margin-top: 2rem;
+    width: 100%;
     
     &-heading {
       display: flex;
@@ -168,9 +221,17 @@ onMounted(() => {
       color: #1e293b;
       margin-bottom: 2rem;
       justify-content: center;
+      word-wrap: break-word;
+      text-align: center;
       
       i {
         color: #f59e0b;
+        flex-shrink: 0;
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 1.3rem;
+        gap: 0.75rem;
       }
     }
     
@@ -178,6 +239,16 @@ onMounted(() => {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
+      width: 100%;
+      
+      @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      @media (max-width: 480px) {
+        gap: 1rem;
+      }
     }
   }
   
@@ -189,11 +260,22 @@ onMounted(() => {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
     
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       border-color: var(--accent-color, #3b82f6);
+    }
+    
+    @media (max-width: 768px) {
+      padding: 1.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 1.25rem;
     }
     
     &-icon {
@@ -207,6 +289,13 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
+      flex-shrink: 0;
+      
+      @media (max-width: 480px) {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+      }
     }
     
     &-name {
@@ -214,11 +303,23 @@ onMounted(() => {
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 0.5rem;
+      word-wrap: break-word;
+      hyphens: auto;
+      
+      @media (max-width: 480px) {
+        font-size: 1.1rem;
+      }
     }
     
     &-desc {
       color: #64748b;
       line-height: 1.6;
+      word-wrap: break-word;
+      
+      @media (max-width: 480px) {
+        font-size: 0.95rem;
+        line-height: 1.5;
+      }
     }
   }
 }

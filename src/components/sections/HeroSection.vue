@@ -129,6 +129,8 @@ onMounted(() => {
   color: white;
   overflow: hidden;
   touch-action: pan-y;
+  width: 100%;
+  max-width: 100vw;
   
   &::before {
     content: '';
@@ -148,6 +150,8 @@ onMounted(() => {
     padding: 2rem;
     position: relative;
     z-index: 2;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   &__content {
@@ -155,6 +159,7 @@ onMounted(() => {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+    width: 100%;
     
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
@@ -165,6 +170,8 @@ onMounted(() => {
   
   &__text {
     max-width: 600px;
+    width: 100%;
+    min-width: 0;
   }
   
   &__name {
@@ -172,6 +179,8 @@ onMounted(() => {
     font-weight: 700;
     line-height: 1.1;
     margin-bottom: 1rem;
+    word-wrap: break-word;
+    hyphens: auto;
     
     &-line {
       display: block;
@@ -187,10 +196,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
     color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    overflow: hidden;
   }
   
   &__typing-text {
     display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
   }
   
   &__cursor {
@@ -209,12 +222,20 @@ onMounted(() => {
     margin-bottom: 2rem;
     color: rgba(255, 255, 255, 0.85);
     max-width: 500px;
+    width: 100%;
+    word-wrap: break-word;
   }
   
   &__actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    width: 100%;
+    
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: center;
+    }
   }
   
   &__cta {
@@ -231,6 +252,14 @@ onMounted(() => {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    min-width: 0;
+    white-space: nowrap;
+    
+    @media (max-width: 480px) {
+      width: 100%;
+      max-width: 280px;
+      justify-content: center;
+    }
     
     &--primary {
       background: rgba(255, 255, 255, 0.2);
@@ -263,6 +292,8 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     position: relative;
+    width: 100%;
+    min-width: 0;
   }
   
   &__avatar {
@@ -281,11 +312,18 @@ onMounted(() => {
     position: relative;
     z-index: 2;
     animation: float 6s ease-in-out infinite;
+    flex-shrink: 0;
     
     @media (max-width: 768px) {
       width: 150px;
       height: 150px;
       font-size: 2.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      width: 120px;
+      height: 120px;
+      font-size: 2rem;
     }
   }
   
@@ -297,6 +335,16 @@ onMounted(() => {
     width: 300px;
     height: 300px;
     pointer-events: none;
+    
+    @media (max-width: 768px) {
+      width: 250px;
+      height: 250px;
+    }
+    
+    @media (max-width: 480px) {
+      width: 200px;
+      height: 200px;
+    }
   }
   
   &__tech-icon {
@@ -317,6 +365,28 @@ onMounted(() => {
     &:nth-child(2) { top: 50%; right: 0; margin-top: -20px; animation-delay: -2.5s, -0.5s; }
     &:nth-child(3) { bottom: 0; left: 50%; margin-left: -20px; animation-delay: -5s, -1s; }
     &:nth-child(4) { top: 50%; left: 0; margin-top: -20px; animation-delay: -7.5s, -1.5s; }
+    
+    @media (max-width: 768px) {
+      width: 35px;
+      height: 35px;
+      font-size: 1.3rem;
+      
+      &:nth-child(1) { margin-left: -17.5px; }
+      &:nth-child(2) { margin-top: -17.5px; }
+      &:nth-child(3) { margin-left: -17.5px; }
+      &:nth-child(4) { margin-top: -17.5px; }
+    }
+    
+    @media (max-width: 480px) {
+      width: 30px;
+      height: 30px;
+      font-size: 1.1rem;
+      
+      &:nth-child(1) { margin-left: -15px; }
+      &:nth-child(2) { margin-top: -15px; }
+      &:nth-child(3) { margin-left: -15px; }
+      &:nth-child(4) { margin-top: -15px; }
+    }
   }
   
   &__scroll-indicator {
@@ -334,6 +404,10 @@ onMounted(() => {
     
     &:hover {
       opacity: 1;
+    }
+    
+    @media (max-width: 480px) {
+      bottom: 1rem;
     }
   }
   

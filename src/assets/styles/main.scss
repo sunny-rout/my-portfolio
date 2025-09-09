@@ -24,6 +24,8 @@ html {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: none;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -32,6 +34,9 @@ body {
   touch-action: manipulation;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
 }
 
 // Fix for mobile viewport height issues

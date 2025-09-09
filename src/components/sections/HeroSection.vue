@@ -75,7 +75,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useTypewriter } from '@/composables/useTypewriter'
+import { useTypewriter } from '@/composables/useTypeWriter'
 
 const props = defineProps({
   personalData: Object

@@ -150,7 +150,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { useFormValidation } from '@/composables/useFormValidation'
+import { useFormValidation } from '@/composables/useFormValidation.js'
 
 const props = defineProps({
   personalData: Object,

@@ -1,166 +1,147 @@
 <template>
-  <div id="app">
-    <!-- Navigation -->
-    <Navigation />
+  <div id="app" class="app">
+    <!-- Skip Navigation -->
+    <a href="#main-content" class="app__skip-link" @click="handleSkipToMain">
+      Skip to main content
+    </a>
     
-    <!-- Hero Section -->
-    <HeroSection />
+    <!-- Navigation Header -->
+    <AppHeader 
+      :navigation-items="portfolioStore.navigation"
+      :personal-data="portfolioStore.personal"
+      :active-section="portfolioStore.activeSection"
+      @navigate="handleNavigation"
+    />
     
-    <!-- About Section -->
-    <AboutSection />
+    <!-- Main Content -->
+    <main id="main-content" class="app__main">
+      <HeroSection 
+        :personal-data="portfolioStore.personal"
+        @navigate="handleNavigation"
+      />
+      
+      <AboutSection 
+        :personal-data="portfolioStore.personal"
+        :stats="portfolioStore.stats"
+      />
+      
+      <SkillsSection :skills="portfolioStore.skills" />
+      
+      <ExperienceSection :experience="portfolioStore.experience" />
+      
+      <ProjectsSection :projects="portfolioStore.projects" />
+      
+      <CertificationsSection :certifications="portfolioStore.certifications" />
+      
+      <ContactSection 
+        :personal-data="portfolioStore.personal"
+        :social-media="portfolioStore.socialMedia"
+      />
+    </main>
     
-    <!-- Skills Section -->
-    <SkillsSection />
+    <!-- Footer -->
+    <AppFooter 
+      :personal-data="portfolioStore.personal"
+      :navigation-items="portfolioStore.navigation"
+      :social-media="portfolioStore.socialMedia"
+    />
     
-    <!-- Projects Section -->
-    <ProjectsSection />
+    <!-- Loading Spinner -->
+    <LoadingSpinner v-if="portfolioStore.isLoading" />
     
-    <!-- Experience Section -->
-    <ExperienceSection />
+    <!-- Back to Top Button -->
+    <BackToTopButton />
     
-    <!-- Education Section -->
-    <EducationSection />
-    
-    <!-- Contact Section -->
-    <ContactSection />
-    
-    <!-- Scroll to Top Button -->
-    <ScrollToTop />
+    <!-- Toast Notifications -->
+    <ToastNotifications />
   </div>
 </template>
 
 <script setup>
-import Navigation from './components/Navigation.vue'
-import HeroSection from './components/HeroSection.vue'
-import AboutSection from './components/AboutSection.vue'
-import SkillsSection from './components/SkillsSection.vue'
-import ProjectsSection from './components/ProjectsSection.vue'
-import ExperienceSection from './components/ExperienceSection.vue'
-import EducationSection from './components/EducationSection.vue'
-import ContactSection from './components/ContactSection.vue'
-import ScrollToTop from './components/ScrollToTop.vue'
+import { onMounted } from 'vue'
+import { usePortfolioStore } from '@/stores/portfolio'
+
+// Components
+import AppHeader from '@/components/sections/AppHeader.vue'
+import HeroSection from '@/components/sections/HeroSection.vue'
+import AboutSection from '@/components/sections/AboutSection.vue'
+import SkillsSection from '@/components/sections/SkillsSection.vue'
+import ExperienceSection from '@/components/sections/ExperienceSection.vue'
+import ProjectsSection from '@/components/sections/ProjectsSection.vue'
+import CertificationsSection from '@/components/sections/CertificationsSection.vue'
+import ContactSection from '@/components/sections/ContactSection.vue'
+import AppFooter from '@/components/sections/AppFooter.vue'
+import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
+import BackToTopButton from '@/components/common/BackToTopButton.vue'
+import ToastNotifications from '@/components/common/ToastNotifications.vue'
+
+// Store
+const portfolioStore = usePortfolioStore()
+
+// Methods
+const handleNavigation = (sectionId) => {
+  const element = document.getElementById(sectionId)
+  if (element) {
+    const headerOffset = 80
+    const elementPosition = element.offsetTop - headerOffset
+    
+    window.scrollTo({
+      top: elementPosition,
+      behavior: 'smooth'
+    })
+    
+    portfolioStore.setActiveSection(sectionId)
+  }
+}
+
+const handleSkipToMain = (event) => {
+  event.preventDefault()
+  const mainContent = document.getElementById('main-content')
+  if (mainContent) {
+    mainContent.focus()
+    mainContent.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
+// Lifecycle
+onMounted(() => {
+  portfolioStore.setLoading(false)
+})
 </script>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  overflow-x: hidden;
-}
-
-#app {
+<style lang="scss">
+.app {
   min-height: 100vh;
-  padding-top: 70px;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.section {
-  padding: 80px 0;
-}
-
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 3rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.btn {
-  display: inline-block;
-  padding: 12px 30px;
-  border: none;
-  border-radius: 50px;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-}
-
-.btn-outline {
-  background: transparent;
-  color: #667eea;
-  border: 2px solid #667eea;
-}
-
-.btn-outline:hover {
-  background: #667eea;
-  color: white;
-  transform: translateY(-2px);
-}
-
-.card {
-  background: white;
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(102, 126, 234, 0.1);
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (max-width: 768px) {
-  .section {
-    padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  color: var(--color-text-primary);
+  
+  &__skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--color-primary);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    z-index: 1000;
+    transition: top 0.2s ease;
+    
+    &:focus {
+      top: 6px;
+    }
   }
   
-  .section-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-  }
-  
-  .container {
-    padding: 0 15px;
-  }
-  
-  #app {
-    padding-top: 60px;
+  &__main {
+    flex: 1;
+    
+    &:focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: -2px;
+    }
   }
 }
 </style>

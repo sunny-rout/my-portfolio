@@ -1,0 +1,242 @@
+// =======================
+// Professional Portfolio Mixins
+// =======================
+@use 'sass:map';
+@use 'variables' as *;
+
+// Breakpoints
+$breakpoints: (
+  'xs': 0px,
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px
+);
+
+// Responsive Mixins
+@mixin breakpoint($size) {
+  @if map.has-key($breakpoints, $size) {
+    @media (min-width: map.get($breakpoints, $size)) {
+      @content;
+    }
+  } @else {
+    @error "Unknown breakpoint: #{$size}";
+  }
+}
+
+@mixin breakpoint-down($size) {
+  @if map.has-key($breakpoints, $size) {
+    $breakpoint-value: map.get($breakpoints, $size);
+    @if $breakpoint-value > 0 {
+      @media (max-width: ($breakpoint-value - 1px)) {
+        @content;
+      }
+    }
+  } @else {
+    @error "Unknown breakpoint: #{$size}";
+  }
+}
+
+// Professional Container matching your design
+@mixin container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--space-16);
+  padding-left: var(--space-16);
+  
+  @include breakpoint('sm') {
+    max-width: var(--container-sm);
+  }
+  
+  @include breakpoint('md') {
+    max-width: var(--container-md);
+  }
+  
+  @include breakpoint('lg') {
+    max-width: var(--container-lg);
+  }
+  
+  @include breakpoint('xl') {
+    max-width: var(--container-xl);
+  }
+}
+
+// Button Mixins matching your styles
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-16);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-standard);
+  border: none;
+  text-decoration: none;
+  position: relative;
+  
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin btn-primary {
+  @include btn-base;
+  background: var(--color-primary);
+  color: var(--color-btn-primary-text);
+  
+  &:hover {
+    background: var(--color-primary-hover);
+  }
+  
+  &:active {
+    background: var(--color-primary-active);
+  }
+}
+
+@mixin btn-secondary {
+  @include btn-base;
+  background: var(--color-secondary);
+  color: var(--color-text);
+  
+  &:hover {
+    background: var(--color-secondary-hover);
+  }
+  
+  &:active {
+    background: var(--color-secondary-active);
+  }
+}
+
+// Card Component matching your design
+@mixin card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-card-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--duration-normal) var(--ease-standard);
+  
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+// Form Input matching your design
+@mixin form-control {
+  display: block;
+  width: 100%;
+  padding: var(--space-8) var(--space-12);
+  font-size: var(--font-size-md);
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+  
+  &:focus {
+    border-color: var(--color-primary);
+    outline: var(--focus-outline);
+  }
+}
+
+// Section Styling
+@mixin section-padding {
+  padding: 120px 0;
+}
+
+// Animations matching your design
+@mixin fade-in-up($duration: 0.8s, $delay: 0s) {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp $duration ease-out $delay forwards;
+}
+
+@mixin slide-in-left($duration: 1s, $delay: 0s) {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slideInLeft $duration ease-out $delay forwards;
+}
+
+// Status indicators
+@mixin status-base {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-6) var(--space-12);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+// Skill bar component
+@mixin skill-bar {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap: var(--space-12);
+  align-items: center;
+  
+  &__name {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+  }
+  
+  &__progress {
+    height: 8px;
+    background: var(--color-secondary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+  
+  &__fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    width: 0;
+    transition: width 1.5s ease-out;
+  }
+  
+  &__years {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+// Utility mixins
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@mixin text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-teal-300) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin hover-lift {
+  transition: transform var(--duration-normal) var(--ease-standard);
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+}

@@ -47,6 +47,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import '../styles/common.css'
 import '../styles/experienceSection.css'
 
 const experience = ref([

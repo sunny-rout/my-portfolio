@@ -90,6 +90,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
+import '../styles/common.css'
 import '../styles/aboutSection.css'
 
 onMounted(() => {

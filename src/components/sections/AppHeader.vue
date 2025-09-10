@@ -93,11 +93,11 @@ onUnmounted(() => {
   right: 0;
   z-index: 10000;
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  //backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  will-change: transform;
+  //will-change: transform;
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;

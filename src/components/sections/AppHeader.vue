@@ -7,7 +7,7 @@
         </a>
       </div>
       
-      <ul class="app-header__menu" :class="{ 'app-header__menu--open': isMobileMenuOpen }">
+      <ul class="app-header__menu" :class="{ 'app-header__menu--active': isMobileMenuOpen }">
         <li v-for="item in navigationItems" :key="item.id" class="app-header__item">
           <a 
             :href="`#${item.id}`" 
@@ -182,7 +182,7 @@ onUnmounted(() => {
       overflow-y: auto;
       z-index: 999;
       
-      &--open {
+      &--active {
         transform: translateY(0);
         opacity: 1;
         visibility: visible;

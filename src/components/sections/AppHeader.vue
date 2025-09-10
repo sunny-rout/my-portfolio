@@ -76,6 +76,8 @@ const toggleMobileMenu = () => {
 onMounted(() => {
   isMobileMenuOpen.value = false
   document.body.style.overflow = ''
+}
+)
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
   // Clean up body overflow on unmount

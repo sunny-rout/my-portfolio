@@ -61,16 +61,25 @@ const handleNavigation = (sectionId) => {
 }
 
 const toggleMobileMenu = () => {
-  console.log('Toggle mobile menu clicked', isMobileMenuOpen.value)
+  console.log('Toggle mobile menu clicked - before:', isMobileMenuOpen.value)
   isMobileMenuOpen.value = !isMobileMenuOpen.value
+  console.log('Toggle mobile menu clicked - after:', isMobileMenuOpen.value)
+  
+  // Add/remove body scroll lock when menu is open
+  if (isMobileMenuOpen.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-})
-
+  isMobileMenuOpen.value = false
+  document.body.style.overflow = ''
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  // Clean up body overflow on unmount
+  document.body.style.overflow = ''
 })
 </script>
 
@@ -157,20 +166,24 @@ onUnmounted(() => {
       top: 70px;
       left: 0;
       right: 0;
-      background: white;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
       flex-direction: column;
       padding: 2rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      transform: translateY(-100%);
+      transform: translateY(-110%);
       opacity: 0;
+      visibility: hidden;
       transition: all 0.3s ease;
       overflow-x: visible;
       max-height: calc(100vh - 70px);
       overflow-y: auto;
+      z-index: 999;
       
       &--open {
         transform: translateY(0);
         opacity: 1;
+        visibility: visible;
       }
     }
   }

@@ -307,6 +307,9 @@ onMounted(() => {
     margin-bottom: 1rem;
     word-wrap: break-word;
     min-width: 0;
+    line-height: 1.6;
+    color: #475569;
+    font-size: 1rem;
     
     &:last-child {
       margin-bottom: 0;
@@ -315,6 +318,19 @@ onMounted(() => {
     @media (max-width: 480px) {
       gap: 0.75rem;
       font-size: 0.95rem;
+    }
+    
+    span {
+      flex: 1;
+      min-width: 0;
+      word-wrap: break-word;
+      color: #475569;
+      line-height: 1.6;
+      
+      strong {
+        color: #1e293b;
+        font-weight: 600;
+      }
     }
   }
   

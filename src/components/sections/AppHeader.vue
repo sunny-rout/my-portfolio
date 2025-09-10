@@ -24,8 +24,7 @@
       <button 
         class="app-header__toggle" 
         :class="{ 'app-header__toggle--active': isMobileMenuOpen }"
-        @click="toggleMobileMenu"
-        @click.stop
+        @click.stop="toggleMobileMenu"
         aria-label="Toggle navigation menu"
       >
         <span></span>
@@ -55,29 +54,23 @@ const handleScroll = () => {
 }
 
 const handleNavigation = (sectionId) => {
+  if (isMobileMenuOpen.value) {
+    isMobileMenuOpen.value = false
+  }
   emit('navigate', sectionId)
-  isMobileMenuOpen.value = false
 }
 
 const toggleMobileMenu = () => {
+  console.log('Toggle mobile menu clicked', isMobileMenuOpen.value)
   isMobileMenuOpen.value = !isMobileMenuOpen.value
-}
-
-// Close mobile menu when clicking outside
-const handleClickOutside = (event) => {
-  if (isMobileMenuOpen.value && !event.target.closest('.app-header__nav')) {
-    isMobileMenuOpen.value = false
-  }
 }
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
-  document.addEventListener('click', handleClickOutside)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
-  document.removeEventListener('click', handleClickOutside)
 })
 </script>
 

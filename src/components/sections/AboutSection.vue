@@ -9,7 +9,7 @@
       </div>
       
       <div class="about-section__content">
-        <div class="about-section__text" :class="{ 'about-section__text--visible': isVisible }">
+        <div class="about-section__text about-section__text--visible">
           <div class="about-section__intro">
             <p class="about-section__paragraph">
               As a seasoned Software Engineer with over <strong>{{ personalData.yearsExperience }}+ years of experience</strong>, 
@@ -142,13 +142,13 @@ const animateStats = () => {
 }
 
 onMounted(() => {
+  // Set initial visibility to true for immediate display
+  isVisible.value = true
+  
   const section = document.getElementById('about')
   if (section) {
     observeElement(section, () => {
-      if (!isVisible.value) { // Prevent multiple triggers
-        isVisible.value = true
-        setTimeout(animateStats, 300)
-      }
+      setTimeout(animateStats, 300)
     }, { threshold: 0.3 })
   }
 })
@@ -307,6 +307,9 @@ onMounted(() => {
     margin-bottom: 1rem;
     word-wrap: break-word;
     min-width: 0;
+    line-height: 1.6;
+    color: #475569;
+    font-size: 1rem;
     
     &:last-child {
       margin-bottom: 0;
@@ -315,6 +318,19 @@ onMounted(() => {
     @media (max-width: 480px) {
       gap: 0.75rem;
       font-size: 0.95rem;
+    }
+    
+    span {
+      flex: 1;
+      min-width: 0;
+      word-wrap: break-word;
+      color: #475569;
+      line-height: 1.6;
+      
+      strong {
+        color: #1e293b;
+        font-weight: 600;
+      }
     }
   }
   

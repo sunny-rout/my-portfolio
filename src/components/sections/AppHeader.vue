@@ -7,7 +7,7 @@
         </a>
       </div>
       
-      <ul class="app-header__menu" :class="{ 'app-header__menu--open': isMobileMenuOpen }">
+      <ul class="app-header__menu" :class="{ 'app-header__menu--active': isMobileMenuOpen }">
         <li v-for="item in navigationItems" :key="item.id" class="app-header__item">
           <a 
             :href="`#${item.id}`" 
@@ -24,7 +24,7 @@
       <button 
         class="app-header__toggle" 
         :class="{ 'app-header__toggle--active': isMobileMenuOpen }"
-        @click="toggleMobileMenu"
+        @click.stop="toggleMobileMenu"
         aria-label="Toggle navigation menu"
       >
         <span></span>
@@ -54,30 +54,34 @@ const handleScroll = () => {
 }
 
 const handleNavigation = (sectionId) => {
-  const element = document.getElementById(sectionId)
-  if (element) {
-    const headerOffset = 80
-    const elementPosition = element.offsetTop - headerOffset
-    
-    window.scrollTo({
-      top: elementPosition,
-      behavior: 'smooth'
-    })
+  if (isMobileMenuOpen.value) {
+    isMobileMenuOpen.value = false
   }
   emit('navigate', sectionId)
-  isMobileMenuOpen.value = false
 }
 
 const toggleMobileMenu = () => {
+  console.log('Toggle mobile menu clicked - before:', isMobileMenuOpen.value)
   isMobileMenuOpen.value = !isMobileMenuOpen.value
+  console.log('Toggle mobile menu clicked - after:', isMobileMenuOpen.value)
+  
+  // Add/remove body scroll lock when menu is open
+  if (isMobileMenuOpen.value) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-})
-
+  isMobileMenuOpen.value = false
+  document.body.style.overflow = ''
+}
+)
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  // Clean up body overflow on unmount
+  document.body.style.overflow = ''
 })
 </script>
 
@@ -87,12 +91,13 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 10000;
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  //backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  will-change: transform;
+  //will-change: transform;
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
@@ -154,7 +159,7 @@ onUnmounted(() => {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-
+    
     &::-webkit-scrollbar {
       display: none;
     }
@@ -164,20 +169,26 @@ onUnmounted(() => {
       top: 70px;
       left: 0;
       right: 0;
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       flex-direction: column;
       padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      transform: translateY(-100%);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(-110%);
       opacity: 0;
+      visibility: hidden;
       transition: all 0.3s ease;
       overflow-x: visible;
       max-height: calc(100vh - 70px);
       overflow-y: auto;
+      z-index: 9999;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       
-      &--open {
+      &--active {
         transform: translateY(0);
         opacity: 1;
+        visibility: visible;
       }
     }
   }

@@ -91,9 +91,10 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 10000;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   will-change: transform;
@@ -168,11 +169,12 @@ onUnmounted(() => {
       top: 70px;
       left: 0;
       right: 0;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       flex-direction: column;
       padding: 2rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
       transform: translateY(-110%);
       opacity: 0;
       visibility: hidden;
@@ -180,7 +182,8 @@ onUnmounted(() => {
       overflow-x: visible;
       max-height: calc(100vh - 70px);
       overflow-y: auto;
-      z-index: 999;
+      z-index: 9999;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       
       &--active {
         transform: translateY(0);

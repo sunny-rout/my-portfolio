@@ -49,7 +49,7 @@
           </div>
           
           <div class="about-section__actions">
-            <button class="about-section__resume-btn">
+            <button class="about-section__resume-btn" @click="downloadResume">
               <i class="fas fa-download"></i>
               <span>Download Resume</span>
             </button>
@@ -78,16 +78,28 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useScrollAnimation } from '@/composables/useScrollAnimation'
+import { useCounterAnimation } from '@/composables/useCounterAnimation'
 
 const props = defineProps({
   personalData: Object,
   stats: Object
 })
 
-const isVisible = ref(false)
-const animatedStats = reactive({})
+const isVisible = ref(false) // Triggers the animation
+
+// Create a separate animated value for each stat
+const animatedStats = reactive(
+  Object.keys(props.stats).reduce((acc, key) => {
+    const target = computed(() => displayValue(props.stats[key]))
+    const { animatedValue } = useCounterAnimation(target, isVisible, {
+      duration: 2000
+    })
+    acc[key] = animatedValue
+    return acc
+  }, {})
+)
 
 const { observeElement } = useScrollAnimation()
 
@@ -106,49 +118,44 @@ const formatStatLabel = (key) => {
 }
 
 const displayValue = (value) => {
-  if (value > 1000000) return (value / 1000000)
+  if (value >= 1000000) return Math.floor(value / 1000000)
   if (value >= 1000) return (value / 1000)
   return value
 }
 const displaySuffix = (value) => {
-  if (value > 1000000) return 'M+'
-  if (value >= 1000) return 'K+'
-  return value
+  return value >= 1000000 ? 'M+' : value >= 1000 ? 'K+' : ''
 }
 
 const getStatSuffix = (key, value) => {
-  if (key === 'usersImpacted' && value >= 1000000) return displaySuffix(value)
-  if (key === 'technologiesUsed') return '+'
-  if (key === 'projectsCompleted') return '+'
-  return ''
+  switch (key) {
+    case 'usersImpacted':
+      return displaySuffix(value)
+    case 'technologiesUsed':
+      return '+'
+    case 'projectsCompleted':
+      return '+'
+    default:
+        return ''
+  }
 }
 
-const animateStats = () => {
-  Object.keys(props.stats).forEach((key) => {
-    const target = displayValue(props.stats[key])
-    const increment = target / 100
-    let current = 0
-    
-    const timer = setInterval(() => {
-      current += increment
-      if (current >= target) {
-        animatedStats[key] = target
-        clearInterval(timer)
-      } else {
-        animatedStats[key] = Math.floor(current)
-      }
-    }, 20)
-  })
+const downloadResume = () => {
+  // Create an anchor element in memory
+  const link = document.createElement('a');
+  // This is the public path to your resume file
+  link.href = '/doc/resume/Sunny_Rout.pdf'; 
+  // This sets the filename for the download
+  link.setAttribute('download', 'Sunny_Rout_Resume.pdf'); 
+  // Programmatically click the link to trigger the download
+  link.click();
 }
 
 onMounted(() => {
-  // Set initial visibility to true for immediate display
-  isVisible.value = true
-  
   const section = document.getElementById('about')
   if (section) {
     observeElement(section, () => {
-      setTimeout(animateStats, 300)
+      // Trigger the animation when the section is visible
+      isVisible.value = true
     }, { threshold: 0.3 })
   }
 })

@@ -43,10 +43,15 @@
             </div>
             
             <div class="certifications-section__actions">
-              <button class="certifications-section__btn">
+              <a
+                class="certifications-section__btn"
+                :href="cert.url"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <i class="fas fa-external-link-alt"></i>
                 View Credential
-              </button>
+              </a>
             </div>
           </div>
         </div>

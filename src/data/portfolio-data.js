@@ -155,7 +155,8 @@ export const portfolioData = {
       issuer: "upGrad in collaboration with Microsoft",
       date: "August 2025",
       badge: "🤖",
-      skills: ["Generative AI", "Machine Learning", "Prompt Engineering", "AI Ethics"]
+      skills: ["Generative AI", "Machine Learning", "Prompt Engineering", "AI Ethics"],
+      url: 'doc/certificates/Gen-AI-Foundation.pdf'
     },
     {
       id: 1,
@@ -163,7 +164,8 @@ export const portfolioData = {
       issuer: "GrowthSchool in collaboration with Outskill",
       date: "August 2025",
       badge: "🤖",
-      skills: ["Generative AI", "Data Engineering", "Diffusion Models", "AI Ethics"]
+      skills: ["Generative AI", "Data Engineering", "Diffusion Models", "AI Ethics"],
+      url: 'doc/certificates/Generative-AI-Mastermind.pdf'
     },
     {
       id: 1,
@@ -171,7 +173,8 @@ export const portfolioData = {
       issuer: "GrowthSchool in collaboration with Outskill",
       date: "August 2025",
       badge: "🤖",
-      skills: ["Generative AI", "AI Agents", "AI Automation", "AI Ethics"]
+      skills: ["Generative AI", "AI Agents", "AI Automation", "AI Ethics"],
+      url: 'doc/certificates/AI-Engineer-Mastermind.pdf'
     },
     {
       id: 2,
@@ -179,7 +182,8 @@ export const portfolioData = {
       issuer: "AWS Training and Certification",
       date: "September 2024",
       badge: "☁️",
-      skills: ["DevOps", "CI/CD", "AWS Services"]
+      skills: ["DevOps", "CI/CD", "AWS Services"],
+      url: 'doc/certificates/Devops-Engineering-AWS.pdf'
     },
     {
       id: 3,
@@ -187,7 +191,8 @@ export const portfolioData = {
       issuer: "AWS Training and Certification",
       date: "August 2024",
       badge: "🏗️",
-      skills: ["Cloud Architecture", "AWS Design Patterns", "Scalability"]
+      skills: ["Cloud Architecture", "AWS Design Patterns", "Scalability"],
+      url: 'doc/certificates/Architect-On-AWS.pdf'
     },
     {
       id: 4,
@@ -195,7 +200,8 @@ export const portfolioData = {
       issuer: "AWS Training and Certification",
       date: "October 2023",
       badge: "⚡",
-      skills: ["AWS Fundamentals", "Cloud Computing", "AWS Services"]
+      skills: ["AWS Fundamentals", "Cloud Computing", "AWS Services"],
+      url: 'doc/certificates/AWS-Technical-Essentials.pdf'
     }
   ],
 

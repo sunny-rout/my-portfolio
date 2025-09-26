@@ -71,6 +71,7 @@ const handleViewDetails = (project) => {
   // Handle project details view
   console.log('View project details:', project)
   const viewDetails = project.details
+  console.log('View details:', viewDetails)
    if (viewDetails) {
     window.open(viewDetails, '_blank', 'noopener,noreferrer')
   }

@@ -94,15 +94,26 @@ const props = defineProps({
   }
   
   &__card {
-    background: var(--color-surface);
+    background: white;
     padding: 2rem;
     border-radius: 16px;
-    box-shadow: var(--shadow-theme-card);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f1f5f9;
     transition: all 0.3s ease;
+    
+    .dark & {
+      background: var(--color-surface);
+      box-shadow: var(--shadow-theme-card);
+      border-color: var(--color-border);
+    }
     
     &:hover {
       transform: translateY(-5px);
-      box-shadow: var(--shadow-theme-card-hover);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      
+      .dark & {
+        box-shadow: var(--shadow-theme-card-hover);
+      }
     }
   }
   
@@ -110,6 +121,10 @@ const props = defineProps({
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid #e2e8f0;
+    
+    .dark & {
+      border-bottom-color: var(--color-border);
+    }
   }
   
   &__title {

@@ -106,8 +106,8 @@
 
 <script setup>
 import { ref, reactive, onMounted, nextTick, computed } from 'vue'
-import { DocumentProcessor } from '@/utils/documentProcessor'
-import { LocalVectorStore } from '@/utils/vectorStore'
+import { DocumentPreloader } from '@/utils/preloadDocuments'
+import { usePortfolioStore } from '@/stores/portfolio'
 
 // Reactive state
 const isOpen = ref(false)
@@ -117,16 +117,17 @@ const isProcessing = ref(false)
 const uploadStatus = ref(null)
 const messages = reactive([])
 
-// Initialize services
-const documentProcessor = new DocumentProcessor()
-const vectorStore = new LocalVectorStore()
+// Initialize services and store
+const documentPreloader = new DocumentPreloader()
+const portfolioStore = usePortfolioStore()
+let vectorStore = null
 
 // Refs
 const messagesContainer = ref(null)
 const fileInput = ref(null)
 
 // Computed
-const hasDocuments = computed(() => vectorStore.getStats().totalDocuments > 0)
+const hasDocuments = computed(() => vectorStore && vectorStore.getStats().totalDocuments > 0)
 
 // Methods
 const toggleChatbot = () => {
@@ -135,48 +136,6 @@ const toggleChatbot = () => {
     nextTick(() => {
       scrollToBottom()
     })
-  }
-}
-
-const handleFileUpload = (event) => {
-  const files = Array.from(event.target.files)
-  processFiles(files)
-}
-
-const handleFileDrop = (event) => {
-  isDragOver.value = false
-  const files = Array.from(event.dataTransfer.files)
-  processFiles(files)
-}
-
-const processFiles = async (files) => {
-  if (files.length === 0) return
-
-  uploadStatus.value = { type: 'info', message: 'Processing files...' }
-  
-  try {
-    for (const file of files) {
-      uploadStatus.value = { type: 'info', message: `Processing ${file.name}...` }
-      
-      const document = await documentProcessor.processFile(file)
-      const chunks = documentProcessor.splitIntoChunks(document.content)
-      
-      await vectorStore.addDocument(document, chunks)
-    }
-
-    uploadStatus.value = { type: 'success', message: `Successfully processed ${files.length} file(s)!` }
-    
-    // Clear status after 3 seconds
-    setTimeout(() => {
-      uploadStatus.value = null
-    }, 3000)
-
-    // Add welcome message
-    addMessage('bot', "Great! I've processed your documents. You can now ask me questions about Sunny's information. Try asking something like 'What is Sunny's experience?' or 'What certifications does Sunny have?'")
-
-  } catch (error) {
-    console.error('Error processing files:', error)
-    uploadStatus.value = { type: 'error', message: `Error: ${error.message}` }
   }
 }
 
@@ -193,10 +152,18 @@ const sendMessage = async () => {
   isProcessing.value = true
   
   try {
-    const results = await vectorStore.search(userMessage, 5)
+    let results = []
+    
+    // Try vector search if available, otherwise use portfolio data
+    if (vectorStore && hasDocuments.value) {
+      results = await vectorStore.search(userMessage, 5)
+    }
+    
     
     if (results.length === 0) {
-      addMessage('bot', "I couldn't find relevant information in the documents to answer your question. Try rephrasing your question or ask about different topics covered in the uploaded documents.")
+      // Use portfolio data to generate response
+      const answer = generateAnswerFromPortfolio(userMessage)
+      addMessage('bot', answer)
     } else {
       // Combine results into a coherent answer
       const answer = generateAnswer(userMessage, results)
@@ -215,6 +182,50 @@ const sendMessage = async () => {
   } finally {
     isProcessing.value = false
   }
+}
+
+const generateAnswerFromPortfolio = (query) => {
+  const lowerQuery = query.toLowerCase()
+  
+  // Experience related questions
+  if (lowerQuery.includes('experience') || lowerQuery.includes('work') || lowerQuery.includes('job') || lowerQuery.includes('career')) {
+    const experience = portfolioStore.experience[0] // Current role
+    return `Sunny has ${portfolioStore.personal.yearsExperience}+ years of experience as a software engineer. Currently, he works as a ${experience.title} at ${experience.company} since ${experience.period}. His key achievements include: ${experience.achievements.slice(0, 3).join(', ')}.`
+  }
+  
+  // Skills related questions
+  if (lowerQuery.includes('skill') || lowerQuery.includes('technology') || lowerQuery.includes('tech') || lowerQuery.includes('programming')) {
+    const topSkills = portfolioStore.skills.categories[0].items.slice(0, 5).map(skill => skill.name).join(', ')
+    const specializations = portfolioStore.skills.specializations.slice(0, 4).map(spec => spec.name).join(', ')
+    return `Sunny's technical expertise includes: ${topSkills}. His core specializations are: ${specializations}. He has extensive experience in cloud architecture, DevOps automation, and full-stack development.`
+  }
+  
+  // Projects related questions
+  if (lowerQuery.includes('project') || lowerQuery.includes('work') || lowerQuery.includes('built') || lowerQuery.includes('developed')) {
+    const featuredProjects = portfolioStore.projects.filter(p => p.featured).slice(0, 3)
+    const projectDescriptions = featuredProjects.map(p => `${p.name}: ${p.description}`).join('\n\n')
+    return `Here are some of Sunny's notable projects:\n\n${projectDescriptions}`
+  }
+  
+  // Certifications related questions
+  if (lowerQuery.includes('certification') || lowerQuery.includes('certificate') || lowerQuery.includes('credential') || lowerQuery.includes('aws') || lowerQuery.includes('ai')) {
+    const recentCerts = portfolioStore.certifications.slice(0, 4)
+    const certList = recentCerts.map(cert => `• ${cert.name} (${cert.issuer}, ${cert.date})`).join('\n')
+    return `Sunny has several professional certifications:\n${certList}\n\nThese demonstrate his expertise in AI, cloud architecture, and DevOps practices.`
+  }
+  
+  // Contact related questions
+  if (lowerQuery.includes('contact') || lowerQuery.includes('reach') || lowerQuery.includes('email') || lowerQuery.includes('phone')) {
+    return `You can reach Sunny at:\n• Email: ${portfolioStore.personal.email}\n• Phone: ${portfolioStore.personal.phone}\n• Location: ${portfolioStore.personal.location}\n• LinkedIn: ${portfolioStore.personal.linkedin}`
+  }
+  
+  // General questions about background
+  if (lowerQuery.includes('about') || lowerQuery.includes('who') || lowerQuery.includes('background') || lowerQuery.includes('sunny')) {
+    return `${portfolioStore.personal.summary}\n\nSunny is currently a ${portfolioStore.experience[0].title} with ${portfolioStore.personal.yearsExperience}+ years of experience in software engineering, specializing in DevOps, CI/CD automation, and cloud architecture.`
+  }
+  
+  // Default response
+  return `I can help you learn about Sunny's professional background. You can ask me about:\n\n• His work experience and career journey\n• Technical skills and specializations\n• Projects he's worked on\n• Professional certifications\n• How to contact him\n\nWhat would you like to know?`
 }
 
 const generateAnswer = (query, results) => {
@@ -277,13 +288,15 @@ const clearDocuments = () => {
   }
 }
 
-// Initialize vector store on mount
+// Initialize vector store and preload documents on mount
 onMounted(async () => {
   try {
-    await vectorStore.initialize()
+    console.log('Initializing chatbot with preloaded documents...')
+    vectorStore = await documentPreloader.preloadPublicDocuments()
+    console.log('Chatbot initialized successfully')
   } catch (error) {
-    console.error('Failed to initialize chatbot:', error)
-    uploadStatus.value = { type: 'error', message: 'Failed to initialize chatbot. Please refresh the page.' }
+    console.error('Failed to preload documents:', error)
+    console.log('Chatbot will use portfolio data only')
   }
 })
 </script>

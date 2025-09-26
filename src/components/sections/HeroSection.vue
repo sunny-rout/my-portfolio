@@ -192,18 +192,29 @@ onMounted(() => {
   &__tagline {
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     margin-bottom: 1.5rem;
-    height: 3rem;
+    min-height: 3rem;
     display: flex;
     align-items: center;
     color: rgba(255, 255, 255, 0.9);
     width: 100%;
-    overflow: hidden;
+    flex-wrap: wrap;
+    
+    @media (max-width: 768px) {
+      min-height: 4rem;
+      align-items: flex-start;
+    }
+    
+    @media (max-width: 480px) {
+      min-height: 5rem;
+    }
   }
   
   &__typing-text {
     display: inline-block;
-    max-width: 100%;
-    overflow: hidden;
+    flex: 1;
+    word-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.4;
   }
   
   &__cursor {

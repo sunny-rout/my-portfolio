@@ -40,7 +40,6 @@
         <i class="fas fa-chart-line"></i>
         <span>{{ project.impact }}</span>
       </div>
-      
     </div>
   
     <div class="project-card__footer">

@@ -417,8 +417,8 @@ onMounted(() => {
       opacity: 1;
     }
     
-    @media (max-width: 480px) {
-      bottom: 1rem;
+    @media (max-width: 768px) {
+      display: none;
     }
   }
   

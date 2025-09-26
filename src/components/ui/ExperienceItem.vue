@@ -158,10 +158,6 @@ const props = defineProps({
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 1rem;
-      
-      .dark & {
-        color: var(--color-text);
-      }
     }
     
     &-list {
@@ -179,6 +175,10 @@ const props = defineProps({
     font-size: 0.95rem;
     line-height: 1.6;
     color: #475569;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
     
     &:last-child {
       margin-bottom: 0;

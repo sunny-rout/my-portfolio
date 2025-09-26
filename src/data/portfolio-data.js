@@ -130,7 +130,7 @@ export const portfolioData = {
         "Implemented real-time threat detection with 99.9% accuracy",
         "Created modular architecture for easy maintenance and updates"
       ],
-      demoUrl: ""
+      details: "https://www.gendigital.com/blog/archive/norton-antitrack"
     },
     {
       id: 2,
@@ -141,7 +141,8 @@ export const portfolioData = {
       category: "devops",
       status: "completed",
       year: "2024",
-      featured: true
+      featured: true,
+      details: "https://in.norton.com/products/norton-vpn"
     },
     {
       id: 3,
@@ -152,7 +153,8 @@ export const portfolioData = {
       category: "security",
       status: "completed",
       year: "2023-2024",
-      featured: true
+      featured: true,
+      details: "https://in.norton.com/products/genie-scam-detector"
     },
     {
       id: 4,
@@ -163,7 +165,8 @@ export const portfolioData = {
       category: "privacy",
       status: "completed",
       year: "2023",
-      featured: false
+      featured: false,
+      details: "https://support.norton.com/sp/en/us/home/current/solutions/v20230819151647830"
     },
     {
       id: 5,
@@ -174,7 +177,8 @@ export const portfolioData = {
       category: "security",
       status: "completed",
       year: "2020-2021",
-      featured: false
+      featured: false,
+      details: "avast.com/en-in/breachguard"
     },
     /*{
       id: 2,

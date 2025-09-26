@@ -146,12 +146,20 @@ const emit = defineEmits(['view-details'])
     color: #1e293b;
     margin: 0;
     line-height: 1.3;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__year {
     font-size: 0.9rem;
     color: #64748b;
     font-weight: 500;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
   }
   
   &__description {
@@ -159,6 +167,10 @@ const emit = defineEmits(['view-details'])
     line-height: 1.6;
     margin-bottom: 1rem;
     font-size: 0.95rem;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
   }
   
   &__technologies {
@@ -175,6 +187,11 @@ const emit = defineEmits(['view-details'])
     border-radius: 12px;
     font-size: 0.8rem;
     font-weight: 500;
+    
+    .dark & {
+      background: var(--color-secondary);
+      color: var(--color-text);
+    }
   }
   
   &__tech-more {
@@ -185,6 +202,11 @@ const emit = defineEmits(['view-details'])
     font-size: 0.8rem;
     font-weight: 500;
     font-style: italic;
+    
+    .dark & {
+      background: var(--color-secondary-hover);
+      color: var(--color-text-secondary);
+    }
   }
   
   &__impact {

@@ -153,30 +153,32 @@ const sendMessage = async () => {
   isProcessing.value = true
   
   try {
-    let results = []
-    
-    // Try vector search if available, otherwise use portfolio data
-    if (vectorStore && hasDocuments.value) {
-      results = await vectorStore.search(userMessage, 5)
-    }
-    
-    
-    if (results.length === 0) {
-      // Use portfolio data to generate response
-      const answer = generateAnswerFromPortfolio(userMessage)
-      addMessage('bot', answer)
-    } else {
-      // Combine results into a coherent answer
-      const answer = generateAnswer(userMessage, results)
-      const sources = results.map(result => ({
-        id: result.document.id,
-        filename: result.document.filename,
-        content: result.document.content.substring(0, 200) + (result.document.content.length > 200 ? '...' : ''),
-        similarity: result.similarity
-      }))
+    let answer = ''
+    let sources = []
 
-      addMessage('bot', answer, sources)
+    // First try to get answer from preprocessed documents
+    if (vectorStore && hasDocuments.value) {
+      const results = await vectorStore.search(userMessage, 5)
+      
+      if (results.length > 0 && results[0].similarity > 0.2) {
+        // Generate answer from document results
+        answer = generateAnswerFromDocuments(userMessage, results)
+        sources = results.map(result => ({
+          id: result.document.id,
+          filename: result.document.filename,
+          content: result.document.content.substring(0, 200) + (result.document.content.length > 200 ? '...' : ''),
+          similarity: result.similarity
+        }))
+      } else {
+        // Fallback to portfolio data only if no relevant documents found
+        answer = generateAnswerFromPortfolio(userMessage)
+      }
+    } else {
+      // Fallback to portfolio data if vector store not available
+      answer = generateAnswerFromPortfolio(userMessage)
     }
+
+    addMessage('bot', answer, sources)
   } catch (error) {
     console.error('Error processing query:', error)
     addMessage('bot', 'Sorry, I encountered an error while processing your question. Please try again.')
@@ -229,31 +231,158 @@ const generateAnswerFromPortfolio = (query) => {
   return `I can help you learn about Sunny's professional background. You can ask me about:\n\n• His work experience and career journey\n• Technical skills and specializations\n• Projects he's worked on\n• Professional certifications\n• How to contact him\n\nWhat would you like to know?`
 }
 
-const generateAnswer = (query, results) => {
-  // Simple answer generation by combining relevant chunks
-  const relevantInfo = results
-    .filter(result => result.similarity > 0.4)
+const generateAnswerFromDocuments = (query, results) => {
+  const lowerQuery = query.toLowerCase()
+  
+  // Filter results by relevance threshold
+  const relevantResults = results.filter(result => result.similarity > 0.3)
+  
+  if (relevantResults.length === 0) {
+    return "I couldn't find specific information about that in the documents. Please try asking about Sunny's experience, skills, projects, or certifications."
+  }
+
+  // Combine relevant content
+  const relevantContent = relevantResults
     .map(result => result.document.content)
     .join(' ')
 
-  if (!relevantInfo) {
-    return "I found some potentially relevant information, but it doesn't seem directly related to your question. Please try rephrasing your query."
+  // Extract key information based on query type
+  let answer = ''
+  
+  if (lowerQuery.includes('experience') || lowerQuery.includes('work') || lowerQuery.includes('job') || lowerQuery.includes('career')) {
+    answer = extractExperienceInfo(relevantContent)
+  } else if (lowerQuery.includes('skill') || lowerQuery.includes('technology') || lowerQuery.includes('tech') || lowerQuery.includes('programming')) {
+    answer = extractSkillsInfo(relevantContent)
+  } else if (lowerQuery.includes('project') || lowerQuery.includes('achievement') || lowerQuery.includes('accomplishment')) {
+    answer = extractProjectsInfo(relevantContent)
+  } else if (lowerQuery.includes('education') || lowerQuery.includes('certification') || lowerQuery.includes('certificate')) {
+    answer = extractEducationInfo(relevantContent)
+  } else if (lowerQuery.includes('contact') || lowerQuery.includes('email') || lowerQuery.includes('phone')) {
+    answer = extractContactInfo(relevantContent)
+  } else {
+    // General information extraction
+    answer = extractGeneralInfo(relevantContent, query)
   }
 
-  // Basic answer formatting
-  let answer = "Based on the documents, here's what I found:\n\n"
+  return answer || "Based on the documents, I found relevant information but couldn't extract a specific answer. Please try rephrasing your question."
+}
+
+const extractExperienceInfo = (content) => {
+  // Extract experience-related information
+  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 20)
+  const experienceKeywords = ['years', 'experience', 'worked', 'engineer', 'developer', 'role', 'position', 'company', 'responsibilities']
   
-  // Try to extract the most relevant sentences
-  const sentences = relevantInfo.split(/[.!?]+/).filter(s => s.trim().length > 10)
-  const relevantSentences = sentences.slice(0, 3).map(s => s.trim()).filter(s => s.length > 0)
+  const relevantSentences = sentences.filter(sentence => 
+    experienceKeywords.some(keyword => sentence.toLowerCase().includes(keyword))
+  ).slice(0, 4)
   
   if (relevantSentences.length > 0) {
-    answer += relevantSentences.join('. ') + '.'
-  } else {
-    answer += relevantInfo.substring(0, 500) + (relevantInfo.length > 500 ? '...' : '')
+    return "Based on the documents:\n\n" + relevantSentences.map(s => s.trim()).join('. ') + '.'
   }
+  
+  return extractGeneralInfo(content, 'experience')
+}
 
-  return answer
+const extractSkillsInfo = (content) => {
+  // Extract skills and technology information
+  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 20)
+  const skillsKeywords = ['skills', 'technology', 'programming', 'languages', 'frameworks', 'tools', 'expertise', 'proficient']
+  
+  const relevantSentences = sentences.filter(sentence => 
+    skillsKeywords.some(keyword => sentence.toLowerCase().includes(keyword))
+  ).slice(0, 4)
+  
+  if (relevantSentences.length > 0) {
+    return "Based on the documents:\n\n" + relevantSentences.map(s => s.trim()).join('. ') + '.'
+  }
+  
+  return extractGeneralInfo(content, 'skills')
+}
+
+const extractProjectsInfo = (content) => {
+  // Extract project and achievement information
+  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 20)
+  const projectKeywords = ['project', 'developed', 'built', 'created', 'implemented', 'designed', 'achievement', 'accomplishment']
+  
+  const relevantSentences = sentences.filter(sentence => 
+    projectKeywords.some(keyword => sentence.toLowerCase().includes(keyword))
+  ).slice(0, 4)
+  
+  if (relevantSentences.length > 0) {
+    return "Based on the documents:\n\n" + relevantSentences.map(s => s.trim()).join('. ') + '.'
+  }
+  
+  return extractGeneralInfo(content, 'projects')
+}
+
+const extractEducationInfo = (content) => {
+  // Extract education and certification information
+  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 20)
+  const educationKeywords = ['education', 'degree', 'certification', 'certificate', 'training', 'course', 'qualified']
+  
+  const relevantSentences = sentences.filter(sentence => 
+    educationKeywords.some(keyword => sentence.toLowerCase().includes(keyword))
+  ).slice(0, 4)
+  
+  if (relevantSentences.length > 0) {
+    return "Based on the documents:\n\n" + relevantSentences.map(s => s.trim()).join('. ') + '.'
+  }
+  
+  return extractGeneralInfo(content, 'education')
+}
+
+const extractContactInfo = (content) => {
+  // Extract contact information
+  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g
+  const phoneRegex = /[\+]?[1-9]?[\d\s\-\(\)]{10,}/g
+  
+  const emails = content.match(emailRegex) || []
+  const phones = content.match(phoneRegex) || []
+  
+  let contactInfo = "Based on the documents:\n\n"
+  
+  if (emails.length > 0) {
+    contactInfo += `Email: ${emails[0]}\n`
+  }
+  
+  if (phones.length > 0) {
+    contactInfo += `Phone: ${phones[0]}\n`
+  }
+  
+  // Look for location information
+  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 10)
+  const locationSentence = sentences.find(s => 
+    s.toLowerCase().includes('location') || 
+    s.toLowerCase().includes('address') || 
+    s.toLowerCase().includes('mumbai') ||
+    s.toLowerCase().includes('india')
+  )
+  
+  if (locationSentence) {
+    contactInfo += `Location: ${locationSentence.trim()}\n`
+  }
+  
+  return contactInfo || extractGeneralInfo(content, 'contact')
+}
+
+const extractGeneralInfo = (content, query) => {
+  // General information extraction
+  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 20)
+  
+  // Take the most relevant sentences based on length and content
+  const relevantSentences = sentences
+    .filter(s => s.trim().length > 30)
+    .slice(0, 3)
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
+  
+  if (relevantSentences.length > 0) {
+    return "Based on the documents:\n\n" + relevantSentences.join('. ') + '.'
+  }
+  
+  // Fallback to first part of content
+  const firstPart = content.substring(0, 400).trim()
+  return firstPart ? `Based on the documents:\n\n${firstPart}${content.length > 400 ? '...' : ''}` : ''
 }
 
 const addMessage = (type, text, sources = null) => {

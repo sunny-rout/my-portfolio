@@ -281,7 +281,8 @@ const hasDemo = computed(() => {
       color: #60a5fa;
     }
     
-    i {
+  }
+  
       color: #2563eb;
       
       .dark & {

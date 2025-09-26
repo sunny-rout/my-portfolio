@@ -10,6 +10,7 @@ export class DocumentPreloader {
   async preloadPublicDocuments() {
     const publicDocuments = [
       '/doc/resume/Sunny_Rout.pdf',
+      '/doc/cover-letter/Sunny_Vijay_Rout_Cover_Letter.docx',
       '/doc/certificates/Gen-AI-Foundation.pdf',
       '/doc/certificates/AI-Engineer-Mastermind.pdf',
       '/doc/certificates/Generative-AI-Mastermind.pdf',
@@ -26,7 +27,9 @@ export class DocumentPreloader {
         if (!response.ok) continue
 
         const blob = await response.blob()
-        const file = new File([blob], docPath.split('/').pop(), { type: 'application/pdf' })
+        const fileName = docPath.split('/').pop()
+        const fileType = fileName.endsWith('.docx') ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : 'application/pdf'
+        const file = new File([blob], fileName, { type: fileType })
         
         const document = await this.documentProcessor.processFile(file)
         const chunks = this.documentProcessor.splitIntoChunks(document.content)

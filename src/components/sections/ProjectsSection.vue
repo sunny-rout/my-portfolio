@@ -75,7 +75,7 @@ const handleViewDetails = (project) => {
 <style lang="scss" scoped>
 .projects-section {
   padding: 5rem 0;
-  background: var(--color-background);
+  background: var(--gradient-section-alt);
   scroll-margin-top: 80px;
   
   &__container {

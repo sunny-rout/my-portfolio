@@ -132,7 +132,7 @@ export const portfolioData = {
       ],
       demoUrl: ""
     },
-    {
+    /*{
       id: 2,
       name: "CI/CD Pipeline Modernization",
       description: "Complete migration and modernization of build systems from Jenkins to TeamCity with cross-platform automation.",
@@ -180,7 +180,7 @@ export const portfolioData = {
       status: "completed",
       year: "2023-2024",
       featured: false
-    },
+    },*/
     {
       id: 5,
       name: "Treasury Management System",

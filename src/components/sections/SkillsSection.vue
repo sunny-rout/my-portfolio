@@ -276,10 +276,19 @@ onMounted(() => {
     box-sizing: border-box;
     min-width: 0;
     
+    .dark & {
+      background: var(--color-surface-elevated);
+      box-shadow: var(--shadow-theme-card);
+    }
+    
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       border-color: var(--accent-color, #3b82f6);
+      
+      .dark & {
+        box-shadow: var(--shadow-theme-card-hover);
+      }
     }
     
     @media (max-width: 768px) {

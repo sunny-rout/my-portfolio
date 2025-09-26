@@ -16,19 +16,23 @@ export class LocalVectorStore {
   async initialize() {
     if (this.isInitialized) return
 
+    // Start in fallback mode by default for resilience
+    this.initializeFallback()
+
     try {
       console.log('Loading embedding model...')
       
       // Use a timeout to prevent the app from hanging if the model can't be loaded
-      this.model = await this.loadModelWithTimeout('Xenova/all-MiniLM-L6-v2', 30000)
-      this.isInitialized = true
+      const loadedModel = await this.loadModelWithTimeout('Xenova/all-MiniLM-L6-v2', 30000)
+      
+      // Only switch to full mode if model loaded successfully
+      this.model = loadedModel
+      this.fallbackMode = false
       console.log('Embedding model loaded successfully')
     } catch (error) {
       console.error('Failed to load embedding model:', error)
-      
-      // Try fallback initialization without model
-      console.log('Attempting fallback initialization...')
-      this.initializeFallback()
+      console.log('Continuing in fallback mode...')
+      // Already in fallback mode, no need to reinitialize
     }
   }
   

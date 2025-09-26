@@ -175,7 +175,7 @@ export const portfolioData = {
       status: "completed",
       year: "2020-2021",
       featured: false
-    }
+    },
     /*{
       id: 2,
       name: "CI/CD Pipeline Modernization",

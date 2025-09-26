@@ -617,7 +617,6 @@ onMounted(async () => {
       background: rgba(239, 68, 68, 0.1);
     }
   }
-  
   &__messages {
     flex: 1;
     overflow-y: auto;
@@ -647,11 +646,6 @@ onMounted(async () => {
       line-height: 1.6;
       margin: 0;
     }
-  }
-  
-  &__fallback-notice {
-    color: #f59e0b;
-    font-style: italic;
   }
   
   &__message {

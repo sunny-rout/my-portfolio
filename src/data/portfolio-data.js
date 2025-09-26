@@ -217,6 +217,6 @@ export const portfolioData = {
 
   socialMedia: [
     { platform: "LinkedIn", url: "https://www.linkedin.com/in/sunnyrout", icon: "fab fa-linkedin-in", color: "#0077B5" },
-    { platform: "GitHub", url: "https://github.com/sunny-rout", icon: "fas fa-code-branch", color: "#24292e" }
+    { platform: "GitHub", url: "https://github.com/sunny-rout", icon: "fab fa-github", color: "#1f2937" }
   ]
 }

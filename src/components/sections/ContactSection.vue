@@ -441,13 +441,19 @@ const handleSubmit = async () => {
       
       .dark & {
         background: var(--color-surface);
-        border-color: var(--color-border);
+        border-color: var(--social-color, var(--color-border));
+        color: var(--social-color, var(--color-text-secondary));
       }
       
       &:hover {
         background: var(--social-color, #3b82f6);
         color: white;
         transform: translateY(-2px);
+        
+        .dark & {
+          background: var(--social-color, #3b82f6);
+          color: white;
+        }
       }
       
       @media (max-width: 480px) {

@@ -1,5 +1,18 @@
 import { createApp } from 'vue'
-import './style.css'
+import { createPinia } from 'pinia'
 import App from './App.vue'
+import '@/assets/styles/main.scss'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+const pinia = createPinia()
+
+app.use(pinia)
+
+// Global error handler
+app.config.errorHandler = (err, instance, info) => {
+  console.error('Global error:', err)
+  console.error('Component instance:', instance)
+  console.error('Error info:', info)
+}
+
+app.mount('#app')

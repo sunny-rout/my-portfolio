@@ -1,0 +1,535 @@
+<template>
+  <section class="about-section" id="about">
+    <div class="about-section__container">
+      <div class="about-section__header">
+        <h2 class="about-section__heading">About Me</h2>
+        <p class="about-section__subtitle">
+          Driving change through technical excellence and collaborative leadership
+        </p>
+      </div>
+      
+      <div class="about-section__content">
+        <div class="about-section__text about-section__text--visible">
+          <div class="about-section__intro">
+            <p class="about-section__paragraph">
+              As a seasoned Software Engineer with over <strong>{{ personalData.yearsExperience }}+ years of experience</strong>, 
+              I excel at driving change and bridging the gap between technical teams and business goals. 
+              My focus isn't just on code; it\'s on <strong>orchestrating projects, optimizing processes</strong>, 
+              and mentoring teams to deliver high-impact, scalable solutions that drive business value.
+            </p>
+            
+            <p class="about-section__paragraph">
+              I champion <strong>agile methodologies</strong> and use a transparent, collaborative approach 
+              to solve complex challenges across <strong>DevOps, CI/CD automation</strong>, and full-stack development. 
+              My expertise spans from architecting cloud-native solutions to leading cross-functional teams 
+              in delivering mission-critical applications.
+            </p>
+          </div>
+          
+          <div class="about-section__highlights">
+            <h3 class="about-section__highlights-heading">What Sets Me Apart</h3>
+            <ul class="about-section__highlights-list">
+              <li class="about-section__highlight-item">
+                <i class="fas fa-rocket about-section__highlight-icon"></i>
+                <span><strong>Process Leadership:</strong> Successfully reduced deployment time by 70% and build times by 40%</span>
+              </li>
+              <li class="about-section__highlight-item">
+                <i class="fas fa-users about-section__highlight-icon"></i>
+                <span><strong>Team Mentoring:</strong> Guided teams through complex technical transformations and agile adoption</span>
+              </li>
+              <li class="about-section__highlight-item">
+                <i class="fas fa-cloud about-section__highlight-icon"></i>
+                <span><strong>Cloud Architecture:</strong> Designed scalable serverless solutions and Infrastructure as Code implementations</span>
+              </li>
+              <li class="about-section__highlight-item">
+                <i class="fas fa-shield-alt about-section__highlight-icon"></i>
+                <span><strong>Security Focus:</strong> Implemented threat modeling and security-first development practices</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="about-section__actions">
+            <button class="about-section__resume-btn" @click="downloadResume">
+              <i class="fas fa-download"></i>
+              <span>Download Resume</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="about-section__stats">
+          <div 
+            v-for="(value, key) in stats" 
+            :key="key" 
+            class="about-section__stat-item"
+            :class="{ 'about-section__stat-item--animated': isVisible }"
+          >
+            <div 
+              class="about-section__stat-number" 
+              :data-target="value"
+            >
+              {{ animatedStats[key] || 0 }}{{ getStatSuffix(key, value) }}
+            </div>
+            <div class="about-section__stat-label">{{ formatStatLabel(key) }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { ref, reactive, onMounted, computed } from 'vue'
+import { useScrollAnimation } from '@/composables/useScrollAnimation'
+import { useCounterAnimation } from '@/composables/useCounterAnimation'
+
+const props = defineProps({
+  personalData: Object,
+  stats: Object
+})
+
+const isVisible = ref(false) // Triggers the animation
+
+// Create a separate animated value for each stat
+const animatedStats = reactive(
+  Object.keys(props.stats).reduce((acc, key) => {
+    const target = computed(() => displayValue(props.stats[key]))
+    const { animatedValue } = useCounterAnimation(target, isVisible, {
+      duration: 2000
+    })
+    acc[key] = animatedValue
+    return acc
+  }, {})
+)
+
+const { observeElement } = useScrollAnimation()
+
+// Methods
+const formatStatLabel = (key) => {
+  const labels = {
+    yearsExperience: 'Years Experience',
+    projectsCompleted: 'Projects Completed',
+    usersImpacted: 'Users Impacted',
+    genAICertifications: 'Gen AI Certifications',
+    awsCertifications: 'AWS Certifications',
+    technologiesUsed: 'Technologies Used',
+    teamsLed: 'Teams Led'
+  }
+  return labels[key] || key
+}
+
+const displayValue = (value) => {
+  if (value >= 1000000) return Math.floor(value / 1000000)
+  if (value >= 1000) return (value / 1000)
+  return value
+}
+const displaySuffix = (value) => {
+  return value >= 1000000 ? 'M+' : value >= 1000 ? 'K+' : ''
+}
+
+const getStatSuffix = (key, value) => {
+  switch (key) {
+    case 'usersImpacted':
+      return displaySuffix(value)
+    case 'technologiesUsed':
+      return '+'
+    case 'projectsCompleted':
+      return '+'
+    default:
+        return ''
+  }
+}
+
+const downloadResume = () => {
+  // Create an anchor element in memory
+  const link = document.createElement('a');
+  // This is the public path to your resume file
+  link.href = '/doc/resume/Sunny_Rout.pdf'; 
+  // This sets the filename for the download
+  link.setAttribute('download', 'Sunny_Rout_Resume.pdf'); 
+  // Programmatically click the link to trigger the download
+  link.click();
+}
+
+onMounted(() => {
+  const section = document.getElementById('about')
+  if (section) {
+    observeElement(section, () => {
+      // Trigger the animation when the section is visible
+      isVisible.value = true
+    }, { threshold: 0.3 })
+  }
+})
+</script>
+
+<style lang="scss" scoped>
+.about-section {
+  padding: 5rem 0;
+  background: var(--gradient-section-alt);
+  scroll-margin-top: 80px;
+  width: 100%;
+  overflow-x: hidden;
+  
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    
+    @media (max-width: 480px) {
+      padding: 0 1rem;
+    }
+  }
+  
+  &__header {
+    text-align: center;
+    margin-bottom: 4rem;
+    
+    @media (max-width: 480px) {
+      margin-bottom: 3rem;
+    }
+  }
+  
+  &__heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    position: relative;
+    word-wrap: break-word;
+    hyphens: auto;
+    
+    .dark & {
+      color: var(--color-text);
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 2px;
+    }
+  }
+  
+  &__subtitle {
+    font-size: 1.2rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+    word-wrap: break-word;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.1rem;
+    }
+  }
+  
+  &__content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    width: 100%;
+    
+    @media (max-width: 968px) {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 2rem;
+    }
+  }
+  
+  &__text {
+    background: white;
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    
+    .dark & {
+      background: var(--color-surface-elevated);
+      box-shadow: var(--shadow-theme-card);
+    }
+    
+    @media (max-width: 768px) {
+      padding: 2rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 1.5rem;
+    }
+  }
+  
+  &__intro {
+    margin-bottom: 2rem;
+  }
+  
+  &__paragraph {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #475569;
+    margin-bottom: 1.5rem;
+    word-wrap: break-word;
+    hyphens: auto;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    strong {
+      color: #1e293b;
+      font-weight: 600;
+      
+      .dark & {
+        color: var(--color-text);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  }
+  
+  &__highlights {
+    margin-bottom: 2rem;
+    
+    &-heading {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 1rem;
+      
+      .dark & {
+        color: var(--color-text);
+      }
+      
+      @media (max-width: 480px) {
+        font-size: 1.2rem;
+      }
+    }
+    
+    &-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+  
+  &__highlight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+    min-width: 0;
+    line-height: 1.6;
+    color: #475569;
+    font-size: 1rem;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 0.75rem;
+      font-size: 0.95rem;
+    }
+    
+    span {
+      flex: 1;
+      min-width: 0;
+      word-wrap: break-word;
+      color: #475569;
+      line-height: 1.6;
+      
+      .dark & {
+        color: var(--color-text-secondary);
+      }
+      
+      strong {
+        color: #1e293b;
+        font-weight: 600;
+        
+        .dark & {
+          color: var(--color-text);
+        }
+      }
+    }
+  }
+  
+  &__highlight-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    margin-top: 0.1rem;
+  }
+  
+  &__actions {
+    margin-top: 2rem;
+    
+    @media (max-width: 480px) {
+      text-align: center;
+    }
+  }
+  
+  &__resume-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+    }
+    
+    @media (max-width: 480px) {
+      width: 100%;
+      justify-content: center;
+      max-width: 280px;
+    }
+  }
+  
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+    
+    @media (max-width: 968px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    
+    @media (max-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      gap: 1rem;
+    }
+  }
+  
+  &__stat-item {
+    background: white;
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    
+    .dark & {
+      background: var(--color-surface-elevated);
+      box-shadow: var(--shadow-theme-card);
+    }
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      
+      .dark & {
+        box-shadow: var(--shadow-theme-card-hover);
+      }
+    }
+    
+    &--animated {
+      animation: fadeInUp 0.6s ease-out;
+    }
+    
+    @media (max-width: 640px) {
+      padding: 1.5rem 1rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 1.25rem 0.75rem;
+    }
+  }
+  
+  &__stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    word-wrap: break-word;
+    
+    @media (max-width: 640px) {
+      font-size: 2rem;
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 1.8rem;
+    }
+  }
+  
+  &__stat-label {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    word-wrap: break-word;
+    hyphens: auto;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+    
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+      letter-spacing: 0.3px;
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

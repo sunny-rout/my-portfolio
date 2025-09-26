@@ -1,0 +1,363 @@
+<template>
+  <div class="project-card">
+    <div class="project-card__image">
+      <div class="project-card__image-placeholder">
+        <i class="fas fa-code"></i>
+      </div>
+      <div class="project-card__status">
+        <span class="project-card__status-badge" :class="`project-card__status-badge--${project.status}`">
+          {{ project.status }}
+        </span>
+        <span v-if="project.featured" class="project-card__featured">
+          <i class="fas fa-star"></i>
+          Featured
+        </span>
+      </div>
+    </div>
+    
+    <div class="project-card__content">
+      <div class="project-card__header">
+        <h3 class="project-card__title">{{ project.name }}</h3>
+        <span class="project-card__year">{{ project.year }}</span>
+      </div>
+      
+      <p class="project-card__description">{{ project.description }}</p>
+      
+      <div class="project-card__technologies">
+        <span 
+          v-for="tech in project.technologies.slice(0, 4)"
+          :key="tech"
+          class="project-card__tech-tag"
+        >
+          {{ tech }}
+        </span>
+        <span v-if="project.technologies.length > 4" class="project-card__tech-more">
+          +{{ project.technologies.length - 4 }} more
+        </span>
+      </div>
+      
+      <div class="project-card__impact">
+        <i class="fas fa-chart-line"></i>
+        <span>{{ project.impact }}</span>
+      </div>
+    </div>
+  
+    <div class="project-card__footer">
+      <div class="project-card__actions">
+        <button 
+          v-if="hasDetails"
+          class="project-card__btn project-card__btn--primary" 
+          @click="$emit('view-details', project)"
+        >
+          <i class="fas fa-eye"></i>
+          View Details
+        </button>
+        <button 
+          v-if="hasDemo"
+          class="project-card__btn project-card__btn--secondary"
+          @click="$emit('view-demo', project)"
+        >
+          <i class="fas fa-external-link-alt"></i>
+          Demo
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({
+  project: Object
+})
+
+const emit = defineEmits(['view-details', 'view-demo'])
+
+// Check if project has detailed information available
+const hasDetails = computed(() => {
+  return  props.project?.details?.length > 10
+  /*return !!(
+    props.project?.description?.length > 100 || // Has detailed description
+    props.project?.achievements?.length > 0 || // Has achievements
+    props.project?.challenges?.length > 0 || // Has challenges
+    props.project?.detailedDescription || // Has detailed description field
+    props.project?.gallery?.length > 0 || // Has image gallery
+    props.project?.testimonials?.length > 0 // Has testimonials
+  )*/
+})
+
+// Check if project has demo available
+const hasDemo = computed(() => {
+  return !!(
+    props.project?.demoUrl || // Has demo URL
+    props.project?.liveUrl || // Has live URL
+    props.project?.previewUrl || // Has preview URL
+    props.project?.githubUrl // Has GitHub URL for demo
+  )
+})
+</script>
+
+<style lang="scss" scoped>
+.project-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f1f5f9;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  
+  .dark & {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-theme-card);
+    border-color: var(--color-border);
+  }
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    
+    .dark & {
+      box-shadow: var(--shadow-theme-card-hover);
+    }
+  }
+  
+  &__image {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &-placeholder {
+      color: white;
+      font-size: 3rem;
+      opacity: 0.7;
+    }
+  }
+  
+  &__status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  &__status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    
+    &--completed {
+      background: #dcfce7;
+      color: #166534;
+    }
+    
+    &--in-progress {
+      background: #fef3c7;
+      color: #92400e;
+    }
+  }
+  
+  &__featured {
+    padding: 0.25rem 0.75rem;
+    background: #fbbf24;
+    color: white;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  &__content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  
+  &__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+    line-height: 1.3;
+    
+    .dark & {
+      color: var(--color-text);
+    }
+  }
+  
+  &__year {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+  }
+  
+  &__description {
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+  }
+  
+  &__technologies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  &__tech-tag {
+    padding: 0.25rem 0.75rem;
+    background: #f8fafc;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    
+    .dark & {
+      background: var(--color-secondary);
+      color: var(--color-text);
+      border-color: var(--color-border);
+    }
+  }
+  
+  &__tech-more {
+    padding: 0.25rem 0.75rem;
+    background: #e2e8f0;
+    color: #64748b;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-style: italic;
+    
+    .dark & {
+      background: var(--color-secondary-hover);
+      color: var(--color-text-secondary);
+    }
+  }
+  
+  &__impact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 8px;
+    margin-bottom: 0;
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: #1e40af;
+    font-weight: 500;
+    
+    .dark & {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+    }
+    
+    i {
+      color: #2563eb;
+      
+      .dark & {
+        color: #60a5fa;
+      }
+    }
+  }
+  
+  &__footer {
+    padding: 1.5rem;
+    padding-top: 0;
+    margin-top: auto;
+  }
+  
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    
+    // Handle single button case
+    &:has(.project-card__btn:only-child) {
+      .project-card__btn {
+        flex: 1;
+      }
+    }
+  }
+  
+  &__btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    
+    &--primary {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      
+      &:hover {
+        background: linear-gradient(135deg, #2563eb, #1e40af);
+        transform: translateY(-1px);
+      }
+    }
+    
+    &--secondary {
+      background: transparent;
+      color: #3b82f6;
+      border: 2px solid #e2e8f0;
+      
+      &:hover {
+        border-color: #3b82f6;
+        background: #f8fafc;
+        
+        .dark & {
+          background: var(--color-secondary-hover);
+          border-color: #3b82f6;
+        }
+      }
+      
+      .dark & {
+        color: #60a5fa;
+        border-color: var(--color-border);
+        
+        &:hover {
+          border-color: #60a5fa;
+        }
+      }
+    }
+  }
+}
+</style>

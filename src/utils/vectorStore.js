@@ -1,4 +1,8 @@
-import { pipeline } from '@xenova/transformers'
+import { pipeline, env } from '@xenova/transformers'
+
+// Configure transformers to use CDN and allow remote models
+env.allowRemoteModels = true
+env.allowLocalModels = false
 
 export class LocalVectorStore {
   constructor() {

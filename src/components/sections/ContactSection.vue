@@ -206,7 +206,7 @@ const handleSubmit = async () => {
 <style lang="scss" scoped>
 .contact-section {
   padding: 5rem 0;
-  background: var(--color-background);
+  background: var(--gradient-section-alt);
   scroll-margin-top: 80px;
   width: 100%;
   overflow-x: hidden;
@@ -291,9 +291,11 @@ const handleSubmit = async () => {
   }
   
   &__info {
-    background: #f8fafc;
+    background: white;
     padding: 2.5rem;
     border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f1f5f9;
     height: fit-content;
     width: 100%;
     box-sizing: border-box;
@@ -301,6 +303,8 @@ const handleSubmit = async () => {
     
     .dark & {
       background: var(--color-surface-elevated);
+      box-shadow: var(--shadow-theme-card);
+      border-color: var(--color-border);
     }
     
     @media (max-width: 768px) {

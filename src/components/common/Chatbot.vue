@@ -159,7 +159,7 @@ const sendMessage = async () => {
     // First try to get answer from preprocessed documents
     if (vectorStore && hasDocuments.value) {
       const results = await vectorStore.search(userMessage, 5)
-      
+      console.log(results)
       if (results.length > 0 && results[0].similarity > 0.2) {
         // Generate answer from document results
         answer = generateAnswerFromDocuments(userMessage, results)

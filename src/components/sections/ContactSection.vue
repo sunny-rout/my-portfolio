@@ -453,6 +453,11 @@ const handleSubmit = async () => {
     box-sizing: border-box;
     min-width: 0;
     
+    .dark & {
+      background: var(--color-surface-elevated);
+      box-shadow: var(--shadow-theme-card);
+    }
+    
     @media (max-width: 768px) {
       padding: 2rem;
     }
@@ -468,6 +473,10 @@ const handleSubmit = async () => {
     color: #1e293b;
     margin-bottom: 2rem;
     word-wrap: break-word;
+    
+    .dark & {
+      color: var(--color-text);
+    }
     
     @media (max-width: 480px) {
       font-size: 1.3rem;

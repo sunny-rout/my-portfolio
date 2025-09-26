@@ -132,6 +132,50 @@ export const portfolioData = {
       ],
       demoUrl: ""
     },
+    {
+      id: 2,
+      name: "VPN Migration",
+      description: "Led VPN migration from Jenkins to TeamCity, involving cross-platform integration and automation across tools such as Visual Studio Code, AWS serverless services, Docker, and Kubernetes.",
+      technologies: ["Jenkins", "TeamCity", "AWS", "Docker", "Kubernetes", "Automation"],
+      impact: "Enhanced CI/CD pipeline for VPN services.",
+      category: "devops",
+      status: "completed",
+      year: "2024",
+      featured: true
+    },
+    {
+      id: 3,
+      name: "LeadGen",
+      description: "A tool to perform a scan on the user’s endpoint to identify if the endpoint is vulnerable to any privacy leaks via tracking and fingerprinting when browsing online.",
+      technologies: ["C#", ".NET", "Privacy", "Security"],
+      impact: "Identifies endpoint vulnerabilities and privacy leaks.",
+      category: "security",
+      status: "completed",
+      year: "2023-2024",
+      featured: true
+    },
+    {
+      id: 4,
+      name: "Private Email",
+      description: "A tool that creates email aliases which manages forwarding email by masking the original email.",
+      technologies: ["Email Alias", "Privacy", "Backend"],
+      impact: "Masks original email to protect user privacy.",
+      category: "privacy",
+      status: "completed",
+      year: "2023",
+      featured: false
+    },
+    {
+      id: 5,
+      name: "DarkWeb Scan",
+      description: "An ITPS service that uses a third-party vendor to scan for users’ exposed information on the dark web.",
+      technologies: ["Security", "API Integration", "Third-Party Vendor"],
+      impact: "Scans for and reports exposed user information on the dark web.",
+      category: "security",
+      status: "completed",
+      year: "2020-2021",
+      featured: false
+    }
     /*{
       id: 2,
       name: "CI/CD Pipeline Modernization",
@@ -182,7 +226,7 @@ export const portfolioData = {
       featured: false
     },*/
     {
-      id: 5,
+      id: 6,
       name: "Treasury Management System",
       description: "Comprehensive banking system with sophisticated data handling and critical report generation capabilities.",
       detailedDescription: "A robust enterprise banking solution designed to handle complex financial operations, regulatory compliance, and real-time reporting. The system processes millions of transactions daily while maintaining strict security and audit requirements.",
@@ -200,7 +244,7 @@ export const portfolioData = {
       ]
     },
     {
-      id: 6,
+      id: 7,
       name: "Magica ERP System",
       description: "Robust enterprise solution managing HR, sales, and finance with advanced data management and reporting.",
       detailedDescription: "A comprehensive Enterprise Resource Planning system that streamlined business operations across multiple departments. The system integrated HR management, sales tracking, financial reporting, and inventory management into a unified platform.",

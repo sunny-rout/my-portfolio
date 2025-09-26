@@ -32,7 +32,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .experience-section {
   padding: 5rem 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: var(--gradient-section-alt);
   scroll-margin-top: 80px;
   
   &__container {
@@ -53,6 +53,10 @@ const props = defineProps({
     margin-bottom: 1rem;
     position: relative;
     
+    .dark & {
+      color: var(--color-text);
+    }
+    
     &::after {
       content: '';
       position: absolute;
@@ -71,6 +75,10 @@ const props = defineProps({
     color: #64748b;
     max-width: 600px;
     margin: 0 auto;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
   }
   
   &__timeline {

@@ -36,12 +36,23 @@ const props = defineProps({
   background: white;
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f1f5f9;
   transition: all 0.3s ease;
   
+  .dark & {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-theme-card);
+    border-color: var(--color-border);
+  }
+  
   &:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
     transform: translateY(-2px);
+    
+    .dark & {
+      box-shadow: var(--shadow-theme-card-hover);
+    }
   }
   
   &__info {
@@ -57,6 +68,10 @@ const props = defineProps({
     gap: 0.75rem;
     font-weight: 600;
     color: #1e293b;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__icon {
@@ -72,6 +87,10 @@ const props = defineProps({
   
   &__years {
     color: #64748b;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
   }
   
   &__level {
@@ -81,9 +100,13 @@ const props = defineProps({
   
   &__progress {
     height: 8px;
-    background: #e2e8f0;
+    background: #f1f5f9;
     border-radius: 4px;
     overflow: hidden;
+    
+    .dark & {
+      background: var(--color-secondary);
+    }
   }
   
   &__fill {

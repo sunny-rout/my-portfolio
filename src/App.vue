@@ -60,6 +60,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { usePortfolioStore } from '@/stores/portfolio'
+import { useTheme } from '@/composables/useTheme'
 
 // Components
 import AppHeader from '@/components/sections/AppHeader.vue'
@@ -77,6 +78,9 @@ import ToastNotifications from '@/components/common/ToastNotifications.vue'
 
 // Store
 const portfolioStore = usePortfolioStore()
+
+// Theme system
+const { initTheme } = useTheme()
 
 // Methods
 const handleNavigation = (sectionId) => {
@@ -105,7 +109,13 @@ const handleSkipToMain = (event) => {
 
 // Lifecycle
 onMounted(() => {
+  // Initialize theme system
+  const cleanup = initTheme()
+  
   portfolioStore.setLoading(false)
+  
+  // Cleanup on unmount
+  return cleanup
 })
 </script>
 

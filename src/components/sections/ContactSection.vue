@@ -206,7 +206,7 @@ const handleSubmit = async () => {
 <style lang="scss" scoped>
 .contact-section {
   padding: 5rem 0;
-  background: white;
+  background: var(--gradient-section-alt);
   scroll-margin-top: 80px;
   width: 100%;
   overflow-x: hidden;
@@ -241,6 +241,10 @@ const handleSubmit = async () => {
     word-wrap: break-word;
     hyphens: auto;
     
+    .dark & {
+      color: var(--color-text);
+    }
+    
     &::after {
       content: '';
       position: absolute;
@@ -260,6 +264,10 @@ const handleSubmit = async () => {
     max-width: 600px;
     margin: 0 auto;
     word-wrap: break-word;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
     
     @media (max-width: 480px) {
       font-size: 1.1rem;
@@ -283,13 +291,21 @@ const handleSubmit = async () => {
   }
   
   &__info {
-    background: #f8fafc;
+    background: white;
     padding: 2.5rem;
     border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f1f5f9;
     height: fit-content;
     width: 100%;
     box-sizing: border-box;
     min-width: 0;
+    
+    .dark & {
+      background: var(--color-surface-elevated);
+      box-shadow: var(--shadow-theme-card);
+      border-color: var(--color-border);
+    }
     
     @media (max-width: 768px) {
       padding: 2rem;
@@ -305,6 +321,10 @@ const handleSubmit = async () => {
       color: #1e293b;
       margin-bottom: 2rem;
       word-wrap: break-word;
+      
+      .dark & {
+        color: var(--color-text);
+      }
       
       @media (max-width: 480px) {
         font-size: 1.3rem;
@@ -362,6 +382,10 @@ const handleSubmit = async () => {
       margin-bottom: 0.25rem;
       font-weight: 500;
       word-wrap: break-word;
+      
+      .dark & {
+        color: var(--color-text-secondary);
+      }
     }
     
     &-value {
@@ -370,6 +394,10 @@ const handleSubmit = async () => {
       text-decoration: none;
       word-wrap: break-word;
       hyphens: auto;
+      
+      .dark & {
+        color: var(--color-text);
+      }
       
       &:hover {
         color: #3b82f6;
@@ -383,6 +411,10 @@ const handleSubmit = async () => {
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 1rem;
+      
+      .dark & {
+        color: var(--color-text);
+      }
       
       @media (max-width: 480px) {
         font-size: 1.1rem;
@@ -403,23 +435,36 @@ const handleSubmit = async () => {
       gap: 0.5rem;
       padding: 0.75rem 1rem;
       background: white;
-      color: var(--social-color, #64748b);
+      color: #64748b;
       text-decoration: none;
       border-radius: 50%;
-      border: 2px solid var(--social-color, #e2e8f0);
+      border: 2px solid #e2e8f0;
       font-weight: 500;
       transition: all 0.3s ease;
       flex-shrink: 0;
+      font-size: 1.1rem;
+      
+      .dark & {
+        background: var(--color-surface);
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
+      }
       
       &:hover {
         background: var(--social-color, #3b82f6);
         color: white;
         transform: translateY(-2px);
+        
+        .dark & {
+          background: var(--social-color, #3b82f6);
+          color: white;
+        }
       }
       
       @media (max-width: 480px) {
         width: 40px;
         height: 40px;
+        font-size: 1rem;
       }
     }
   }
@@ -432,6 +477,11 @@ const handleSubmit = async () => {
     width: 100%;
     box-sizing: border-box;
     min-width: 0;
+    
+    .dark & {
+      background: var(--color-surface-elevated);
+      box-shadow: var(--shadow-theme-card);
+    }
     
     @media (max-width: 768px) {
       padding: 2rem;
@@ -448,6 +498,10 @@ const handleSubmit = async () => {
     color: #1e293b;
     margin-bottom: 2rem;
     word-wrap: break-word;
+    
+    .dark & {
+      color: var(--color-text);
+    }
     
     @media (max-width: 480px) {
       font-size: 1.3rem;
@@ -485,6 +539,10 @@ const handleSubmit = async () => {
     color: #374151;
     margin-bottom: 0.5rem;
     word-wrap: break-word;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__form-input,
@@ -497,6 +555,16 @@ const handleSubmit = async () => {
     width: 100%;
     box-sizing: border-box;
     min-width: 0;
+    
+    .dark & {
+      background: var(--color-surface);
+      border-color: var(--color-border);
+      color: var(--color-text);
+      
+      &::placeholder {
+        color: var(--color-text-secondary);
+      }
+    }
     
     &:focus {
       outline: none;

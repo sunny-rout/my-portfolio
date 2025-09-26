@@ -98,11 +98,22 @@ const props = defineProps({
     padding: 2rem;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f1f5f9;
     transition: all 0.3s ease;
+    
+    .dark & {
+      background: var(--color-surface);
+      box-shadow: var(--shadow-theme-card);
+      border-color: var(--color-border);
+    }
     
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      
+      .dark & {
+        box-shadow: var(--shadow-theme-card-hover);
+      }
     }
   }
   
@@ -110,6 +121,10 @@ const props = defineProps({
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid #e2e8f0;
+    
+    .dark & {
+      border-bottom-color: var(--color-border);
+    }
   }
   
   &__title {
@@ -117,6 +132,10 @@ const props = defineProps({
     font-weight: 700;
     color: #1e293b;
     margin-bottom: 0.5rem;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__company {
@@ -132,6 +151,10 @@ const props = defineProps({
     gap: 0.5rem;
     font-size: 0.9rem;
     color: #64748b;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
     
     i {
       color: #94a3b8;
@@ -168,6 +191,10 @@ const props = defineProps({
     line-height: 1.6;
     color: #475569;
     
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+    
     &:last-child {
       margin-bottom: 0;
     }
@@ -185,6 +212,10 @@ const props = defineProps({
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 1rem;
+      
+      .dark & {
+        color: var(--color-text);
+      }
     }
   }
   

@@ -75,7 +75,7 @@ const handleViewDetails = (project) => {
 <style lang="scss" scoped>
 .projects-section {
   padding: 5rem 0;
-  background: white;
+  background: var(--gradient-section-alt);
   scroll-margin-top: 80px;
   
   &__container {
@@ -95,6 +95,10 @@ const handleViewDetails = (project) => {
     color: #1e293b;
     margin-bottom: 1rem;
     position: relative;
+    
+    .dark & {
+      color: var(--color-text);
+    }
     
     &::after {
       content: '';
@@ -134,9 +138,19 @@ const handleViewDetails = (project) => {
     cursor: pointer;
     transition: all 0.3s ease;
     
+    .dark & {
+      background: var(--color-surface-elevated);
+      color: var(--color-text-secondary);
+    }
+    
     &:hover {
       background: #e2e8f0;
       color: #475569;
+      
+      .dark & {
+        background: var(--color-secondary-hover);
+        color: var(--color-text);
+      }
     }
     
     &--active {

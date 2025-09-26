@@ -125,7 +125,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   position: relative;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient-hero);
   color: white;
   overflow: hidden;
   touch-action: pan-y;

@@ -67,13 +67,24 @@ const emit = defineEmits(['view-details'])
 .project-card {
   background: white;
   border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f1f5f9;
   overflow: hidden;
   transition: all 0.3s ease;
+  
+  .dark & {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-theme-card);
+    border-color: var(--color-border);
+  }
   
   &:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    
+    .dark & {
+      box-shadow: var(--shadow-theme-card-hover);
+    }
   }
   
   &__image {
@@ -146,12 +157,20 @@ const emit = defineEmits(['view-details'])
     color: #1e293b;
     margin: 0;
     line-height: 1.3;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__year {
     font-size: 0.9rem;
     color: #64748b;
     font-weight: 500;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
   }
   
   &__description {
@@ -159,6 +178,10 @@ const emit = defineEmits(['view-details'])
     line-height: 1.6;
     margin-bottom: 1rem;
     font-size: 0.95rem;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
   }
   
   &__technologies {
@@ -170,11 +193,18 @@ const emit = defineEmits(['view-details'])
   
   &__tech-tag {
     padding: 0.25rem 0.75rem;
-    background: #f1f5f9;
-    color: #475569;
+    background: #f8fafc;
+    color: #374151;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
     font-size: 0.8rem;
     font-weight: 500;
+    
+    .dark & {
+      background: var(--color-secondary);
+      color: var(--color-text);
+      border-color: var(--color-border);
+    }
   }
   
   &__tech-more {
@@ -185,6 +215,11 @@ const emit = defineEmits(['view-details'])
     font-size: 0.8rem;
     font-weight: 500;
     font-style: italic;
+    
+    .dark & {
+      background: var(--color-secondary-hover);
+      color: var(--color-text-secondary);
+    }
   }
   
   &__impact {
@@ -192,15 +227,26 @@ const emit = defineEmits(['view-details'])
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem;
-    background: #f0f9ff;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
     border-radius: 8px;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
-    color: #0369a1;
+    color: #1e40af;
     font-weight: 500;
     
+    .dark & {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+    }
+    
     i {
-      color: #0284c7;
+      color: #2563eb;
+      
+      .dark & {
+        color: #60a5fa;
+      }
     }
   }
   

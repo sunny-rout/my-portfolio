@@ -41,26 +41,27 @@
         <span>{{ project.impact }}</span>
       </div>
       
-  </div>
+    </div>
   
-  <div class="project-card__footer">
-    <div class="project-card__actions">
-      <button 
-        v-if="hasDetails"
-        class="project-card__btn project-card__btn--primary" 
-        @click="$emit('view-details', project)"
-      >
-        <i class="fas fa-eye"></i>
-        View Details
-      </button>
-      <button 
-        v-if="hasDemo"
-        class="project-card__btn project-card__btn--secondary"
-        @click="$emit('view-demo', project)"
-      >
-        <i class="fas fa-external-link-alt"></i>
-        Demo
-      </button>
+    <div class="project-card__footer">
+      <div class="project-card__actions">
+        <button 
+          v-if="hasDetails"
+          class="project-card__btn project-card__btn--primary" 
+          @click="$emit('view-details', project)"
+        >
+          <i class="fas fa-eye"></i>
+          View Details
+        </button>
+        <button 
+          v-if="hasDemo"
+          class="project-card__btn project-card__btn--secondary"
+          @click="$emit('view-demo', project)"
+        >
+          <i class="fas fa-external-link-alt"></i>
+          Demo
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -281,8 +282,7 @@ const hasDemo = computed(() => {
       color: #60a5fa;
     }
     
-  }
-  
+    i {
       color: #2563eb;
       
       .dark & {

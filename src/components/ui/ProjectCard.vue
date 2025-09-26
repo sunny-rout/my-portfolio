@@ -76,14 +76,15 @@ const emit = defineEmits(['view-details', 'view-demo'])
 
 // Check if project has detailed information available
 const hasDetails = computed(() => {
-  return !!(
+  return false
+  /*return !!(
     props.project?.description?.length > 100 || // Has detailed description
     props.project?.achievements?.length > 0 || // Has achievements
     props.project?.challenges?.length > 0 || // Has challenges
     props.project?.detailedDescription || // Has detailed description field
     props.project?.gallery?.length > 0 || // Has image gallery
     props.project?.testimonials?.length > 0 // Has testimonials
-  )
+  )*/
 })
 
 // Check if project has demo available

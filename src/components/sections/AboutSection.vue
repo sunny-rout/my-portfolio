@@ -284,6 +284,10 @@ onMounted(() => {
     word-wrap: break-word;
     hyphens: auto;
     
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+    
     &:last-child {
       margin-bottom: 0;
     }
@@ -339,6 +343,10 @@ onMounted(() => {
     color: #475569;
     font-size: 1rem;
     
+    .dark & {
+      color: var(--color-text-secondary);
+    }
+    
     &:last-child {
       margin-bottom: 0;
     }
@@ -354,6 +362,10 @@ onMounted(() => {
       word-wrap: break-word;
       color: #475569;
       line-height: 1.6;
+      
+      .dark & {
+        color: var(--color-text-secondary);
+      }
       
       strong {
         color: #1e293b;
@@ -498,6 +510,10 @@ onMounted(() => {
     letter-spacing: 0.5px;
     word-wrap: break-word;
     hyphens: auto;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
     
     @media (max-width: 480px) {
       font-size: 0.8rem;

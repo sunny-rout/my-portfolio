@@ -41,24 +41,26 @@
         <span>{{ project.impact }}</span>
       </div>
       
-      <div class="project-card__actions">
-        <button 
-          v-if="hasDetails"
-          class="project-card__btn project-card__btn--primary" 
-          @click="$emit('view-details', project)"
-        >
-          <i class="fas fa-eye"></i>
-          View Details
-        </button>
-        <button 
-          v-if="hasDemo"
-          class="project-card__btn project-card__btn--secondary"
-          @click="$emit('view-demo', project)"
-        >
-          <i class="fas fa-external-link-alt"></i>
-          Demo
-        </button>
-      </div>
+  </div>
+  
+  <div class="project-card__footer">
+    <div class="project-card__actions">
+      <button 
+        v-if="hasDetails"
+        class="project-card__btn project-card__btn--primary" 
+        @click="$emit('view-details', project)"
+      >
+        <i class="fas fa-eye"></i>
+        View Details
+      </button>
+      <button 
+        v-if="hasDemo"
+        class="project-card__btn project-card__btn--secondary"
+        @click="$emit('view-demo', project)"
+      >
+        <i class="fas fa-external-link-alt"></i>
+        Demo
+      </button>
     </div>
   </div>
 </template>
@@ -103,6 +105,8 @@ const hasDemo = computed(() => {
   border: 1px solid #f1f5f9;
   overflow: hidden;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
   
   .dark & {
     background: var(--color-surface);
@@ -174,6 +178,9 @@ const hasDemo = computed(() => {
   
   &__content {
     padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   
   &__header {
@@ -262,7 +269,8 @@ const hasDemo = computed(() => {
     background: #eff6ff;
     border: 1px solid #dbeafe;
     border-radius: 8px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+    margin-top: auto;
     font-size: 0.9rem;
     color: #1e40af;
     font-weight: 500;
@@ -280,6 +288,12 @@ const hasDemo = computed(() => {
         color: #60a5fa;
       }
     }
+  }
+  
+  &__footer {
+    padding: 1.5rem;
+    padding-top: 0;
+    margin-top: auto;
   }
   
   &__actions {

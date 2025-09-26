@@ -130,7 +130,7 @@ export const portfolioData = {
         "Implemented real-time threat detection with 99.9% accuracy",
         "Created modular architecture for easy maintenance and updates"
       ],
-      demoUrl: "https://demo.antitrack.example.com"
+      demoUrl: ""
     },
     {
       id: 2,
@@ -149,7 +149,7 @@ export const portfolioData = {
         "Implemented cross-platform build support for Windows, Linux, and macOS",
         "Established comprehensive monitoring and alerting system"
       ],
-      githubUrl: "https://github.com/example/cicd-modernization"
+      githubUrl: ""
     },
     {
       id: 3,
@@ -168,7 +168,7 @@ export const portfolioData = {
         "Achieved 99.9% uptime with comprehensive monitoring and alerting",
         "Reduced operational costs by 60% compared to traditional server-based solutions"
       ],
-      liveUrl: "https://serverless-demo.aws.example.com"
+      liveUrl: ""
     },
     {
       id: 4,

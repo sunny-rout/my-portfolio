@@ -33,14 +33,14 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .skill-bar {
-  background: white;
+  background: var(--color-surface);
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-theme-card);
   transition: all 0.3s ease;
   
   &:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-theme-card-hover);
     transform: translateY(-2px);
   }
   

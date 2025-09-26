@@ -94,15 +94,15 @@ const props = defineProps({
   }
   
   &__card {
-    background: white;
+    background: var(--color-surface);
     padding: 2rem;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-theme-card);
     transition: all 0.3s ease;
     
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-theme-card-hover);
     }
   }
   

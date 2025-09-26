@@ -21,22 +21,27 @@
         </li>
       </ul>
       
-      <button 
-        class="app-header__toggle" 
-        :class="{ 'app-header__toggle--active': isMobileMenuOpen }"
-        @click.stop="toggleMobileMenu"
-        aria-label="Toggle navigation menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <div class="app-header__actions">
+        <ThemeToggle />
+        
+        <button 
+          class="app-header__toggle" 
+          :class="{ 'app-header__toggle--active': isMobileMenuOpen }"
+          @click.stop="toggleMobileMenu"
+          aria-label="Toggle navigation menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </nav>
   </header>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import ThemeToggle from '@/components/common/ThemeToggle.vue'
 
 const props = defineProps({
   navigationItems: Array,
@@ -190,6 +195,11 @@ onUnmounted(() => {
         opacity: 1;
         visibility: visible;
       }
+      
+      .dark & {
+        background: rgba(15, 23, 42, 0.95);
+        border-bottom-color: var(--color-border);
+      }
     }
   }
   
@@ -230,6 +240,20 @@ onUnmounted(() => {
       padding: 1rem;
       width: 100%;
     }
+    
+    .dark & {
+      color: var(--color-text-secondary);
+      
+      &:hover {
+        color: var(--color-primary);
+        background: rgba(59, 130, 246, 0.1);
+      }
+      
+      &--active {
+        color: var(--color-primary);
+        background: rgba(59, 130, 246, 0.15);
+      }
+    }
   }
   
   &__link-icon {
@@ -246,6 +270,12 @@ onUnmounted(() => {
     @media (max-width: 480px) {
       font-size: 0.9rem;
     }
+  }
+  
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
   
   &__toggle {
@@ -270,6 +300,10 @@ onUnmounted(() => {
       margin: 2px 0;
       transition: all 0.3s ease;
       transform-origin: center;
+      
+      .dark & {
+        background: var(--color-text-secondary);
+      }
     }
     
     &--active {

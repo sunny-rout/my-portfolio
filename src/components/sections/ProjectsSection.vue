@@ -75,7 +75,7 @@ const handleViewDetails = (project) => {
 <style lang="scss" scoped>
 .projects-section {
   padding: 5rem 0;
-  background: white;
+  background: var(--color-background);
   scroll-margin-top: 80px;
   
   &__container {

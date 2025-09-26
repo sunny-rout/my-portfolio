@@ -65,15 +65,15 @@ const emit = defineEmits(['view-details'])
 
 <style lang="scss" scoped>
 .project-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-theme-card);
   overflow: hidden;
   transition: all 0.3s ease;
   
   &:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-theme-card-hover);
   }
   
   &__image {

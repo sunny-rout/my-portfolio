@@ -164,7 +164,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .about-section {
   padding: 5rem 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: var(--gradient-section-alt);
   scroll-margin-top: 80px;
   width: 100%;
   overflow-x: hidden;

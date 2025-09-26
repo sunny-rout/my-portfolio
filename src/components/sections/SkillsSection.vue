@@ -82,7 +82,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .skills-section {
   padding: 5rem 0;
-  background: white;
+  background: var(--color-background);
   scroll-margin-top: 80px;
   width: 100%;
   overflow-x: hidden;

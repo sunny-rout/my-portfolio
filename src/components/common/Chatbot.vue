@@ -72,6 +72,7 @@
           </div>
           <div class="chatbot__message-content">
             <div class="chatbot__typing">
+              <span class="chatbot__typing-text">AI is typing</span>
               <span></span>
               <span></span>
               <span></span>
@@ -839,10 +840,12 @@ onMounted(async () => {
 
 @keyframes typing {
   0%, 60%, 100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
   }
   30% {
-    transform: translateY(-10px);
+    transform: translateY(-8px) scale(1.2);
+    opacity: 1;
   }
 }
 </style>

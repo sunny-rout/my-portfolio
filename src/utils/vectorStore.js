@@ -1,8 +1,9 @@
 import { pipeline, env } from '@xenova/transformers'
 
-// Configure transformers to use CDN and allow remote models
-env.allowRemoteModels = true
-env.allowLocalModels = false
+// Configure transformers to use local models
+env.allowRemoteModels = false
+env.allowLocalModels = true
+env.localModelPath = '/models/'
 
 export class LocalVectorStore {
   constructor() {
@@ -22,6 +23,17 @@ export class LocalVectorStore {
       console.log('Embedding model loaded successfully')
     } catch (error) {
       console.error('Failed to load embedding model:', error)
+      
+      // Add detailed error logging
+      if (error.response) {
+        try {
+          const text = await error.response.text()
+          console.error('Server returned:', text)
+        } catch (textError) {
+          console.error('Could not read error response:', textError)
+        }
+      }
+      
       throw new Error('Failed to initialize vector store')
     }
   }

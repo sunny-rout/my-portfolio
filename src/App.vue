@@ -54,6 +54,9 @@
     
     <!-- Toast Notifications -->
     <ToastNotifications />
+    
+    <!-- Chatbot -->
+    <Chatbot />
   </div>
 </template>
 
@@ -75,6 +78,7 @@ import AppFooter from '@/components/sections/AppFooter.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import BackToTopButton from '@/components/common/BackToTopButton.vue'
 import ToastNotifications from '@/components/common/ToastNotifications.vue'
+import Chatbot from '@/components/common/Chatbot.vue'
 
 // Store
 const portfolioStore = usePortfolioStore()

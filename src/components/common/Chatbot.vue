@@ -64,6 +64,10 @@
           <i class="fas fa-database"></i>
           <span>{{ vectorStore.getStats().totalDocuments }} chunks</span>
         </div>
+        <div v-if="vectorStore.getStats().fallbackMode" class="chatbot__stats-item chatbot__stats-item--warning">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>Fallback mode</span>
+        </div>
         <button class="chatbot__clear-btn" @click="clearDocuments">
           <i class="fas fa-trash"></i>
           Clear
@@ -74,7 +78,11 @@
       <div class="chatbot__messages" ref="messagesContainer">
         <div v-if="!hasDocuments && !isInitializing" class="chatbot__welcome">
           <i class="fas fa-robot"></i>
-          <p>Hi! I'm your document assistant. Upload some documents about Sunny to get started, and I'll help you find information from them.</p>
+          <p>Hi! I'm your document assistant. Upload some documents about Sunny to get started, and I'll help you find information from them.
+            <span v-if="vectorStore.getStats().fallbackMode" class="chatbot__fallback-notice">
+              <br><small><i class="fas fa-info-circle"></i> Running in fallback mode with basic text matching.</small>
+            </span>
+          </p>
         </div>
 
         <div 
@@ -583,6 +591,14 @@ onMounted(async () => {
     }
   }
   
+  &__stats-item--warning {
+    color: #f59e0b;
+    
+    i {
+      color: #f59e0b;
+    }
+  }
+  
   &__clear-btn {
     margin-left: auto;
     background: none;
@@ -631,6 +647,11 @@ onMounted(async () => {
       line-height: 1.6;
       margin: 0;
     }
+  }
+  
+  &__fallback-notice {
+    color: #f59e0b;
+    font-style: italic;
   }
   
   &__message {

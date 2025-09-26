@@ -1,9 +1,8 @@
 import { pipeline, env } from '@xenova/transformers'
 
-// Configure transformers to use local models
-env.allowRemoteModels = false
-env.allowLocalModels = true
-env.localModelPath = '/models/'
+// Configure transformers to use CDN models
+env.allowRemoteModels = true
+env.allowLocalModels = false
 
 export class LocalVectorStore {
   constructor() {
@@ -18,24 +17,43 @@ export class LocalVectorStore {
 
     try {
       console.log('Loading embedding model...')
-      this.model = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2')
+      
+      // Try to load the model with timeout
+      const modelPromise = pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
+        progress_callback: (progress) => {
+          console.log('Model loading progress:', progress)
+        }
+      })
+      
+      // Add timeout to prevent hanging
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Model loading timeout')), 30000)
+      })
+      
+      this.model = await Promise.race([modelPromise, timeoutPromise])
       this.isInitialized = true
       console.log('Embedding model loaded successfully')
     } catch (error) {
       console.error('Failed to load embedding model:', error)
       
-      // Add detailed error logging
-      if (error.response) {
-        try {
-          const text = await error.response.text()
-          console.error('Server returned:', text)
-        } catch (textError) {
-          console.error('Could not read error response:', textError)
-        }
-      }
+      // Log detailed error information
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      })
       
-      throw new Error('Failed to initialize vector store')
+      // Try fallback initialization without model
+      console.log('Attempting fallback initialization...')
+      this.initializeFallback()
     }
+  }
+  
+  initializeFallback() {
+    console.log('Using fallback mode - simple text matching')
+    this.model = null
+    this.isInitialized = true
+    this.fallbackMode = true
   }
 
   async addDocument(document, chunks) {
@@ -48,7 +66,9 @@ export class LocalVectorStore {
     for (let i = 0; i < chunks.length; i++) {
       const chunk = chunks[i]
       try {
-        const embedding = await this.generateEmbedding(chunk)
+        const embedding = this.fallbackMode ? 
+          this.generateSimpleEmbedding(chunk) : 
+          await this.generateEmbedding(chunk)
         
         this.embeddings.push(embedding)
         this.documents.push({
@@ -67,12 +87,42 @@ export class LocalVectorStore {
   }
 
   async generateEmbedding(text) {
-    if (!this.model) {
+    if (!this.model && !this.fallbackMode) {
       throw new Error('Model not initialized')
+    }
+    
+    if (this.fallbackMode) {
+      return this.generateSimpleEmbedding(text)
     }
 
     const output = await this.model(text, { pooling: 'mean', normalize: true })
     return Array.from(output.data)
+  }
+  
+  generateSimpleEmbedding(text) {
+    // Simple fallback: create embedding based on word frequency and position
+    const words = text.toLowerCase().split(/\s+/)
+    const embedding = new Array(384).fill(0) // Match MiniLM dimension
+    
+    words.forEach((word, index) => {
+      const hash = this.simpleHash(word)
+      const pos = hash % 384
+      embedding[pos] += 1 / (index + 1) // Weight by position
+    })
+    
+    // Normalize
+    const norm = Math.sqrt(embedding.reduce((sum, val) => sum + val * val, 0))
+    return norm > 0 ? embedding.map(val => val / norm) : embedding
+  }
+  
+  simpleHash(str) {
+    let hash = 0
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i)
+      hash = ((hash << 5) - hash) + char
+      hash = hash & hash // Convert to 32-bit integer
+    }
+    return Math.abs(hash)
   }
 
   async search(query, topK = 5) {
@@ -84,7 +134,9 @@ export class LocalVectorStore {
       return []
     }
 
-    const queryEmbedding = await this.generateEmbedding(query)
+    const queryEmbedding = this.fallbackMode ? 
+      this.generateSimpleEmbedding(query) : 
+      await this.generateEmbedding(query)
     const similarities = []
 
     for (let i = 0; i < this.embeddings.length; i++) {
@@ -100,7 +152,7 @@ export class LocalVectorStore {
     return similarities
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, topK)
-      .filter(result => result.similarity > 0.3) // Filter out very low similarity results
+      .filter(result => result.similarity > (this.fallbackMode ? 0.1 : 0.3))
   }
 
   cosineSimilarity(vecA, vecB) {
@@ -133,12 +185,14 @@ export class LocalVectorStore {
       totalDocuments: this.documents.length,
       totalEmbeddings: this.embeddings.length,
       isInitialized: this.isInitialized,
-      uniqueFiles: [...new Set(this.documents.map(doc => doc.filename))].length
+      uniqueFiles: [...new Set(this.documents.map(doc => doc.filename))].length,
+      fallbackMode: this.fallbackMode || false
     }
   }
 
   clear() {
     this.embeddings = []
     this.documents = []
+    this.fallbackMode = false
   }
 }

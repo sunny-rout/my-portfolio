@@ -169,6 +169,11 @@ onMounted(() => {
     box-sizing: border-box;
     min-width: 0;
     
+    .dark & {
+      background: var(--color-surface-elevated);
+      border-color: var(--color-border);
+    }
+    
     @media (max-width: 768px) {
       padding: 2rem;
     }
@@ -187,6 +192,10 @@ onMounted(() => {
       margin-bottom: 2rem;
       word-wrap: break-word;
       min-width: 0;
+      
+      .dark & {
+        color: var(--color-text);
+      }
       
       @media (max-width: 480px) {
         font-size: 1.3rem;

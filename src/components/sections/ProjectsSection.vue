@@ -96,6 +96,10 @@ const handleViewDetails = (project) => {
     margin-bottom: 1rem;
     position: relative;
     
+    .dark & {
+      color: var(--color-text);
+    }
+    
     &::after {
       content: '';
       position: absolute;

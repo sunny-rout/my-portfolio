@@ -435,10 +435,10 @@ const handleSubmit = async () => {
       gap: 0.5rem;
       padding: 0.75rem 1rem;
       background: white;
-      color: var(--social-color, #64748b);
+      color: #64748b;
       text-decoration: none;
       border-radius: 50%;
-      border: 2px solid var(--social-color, #e2e8f0);
+      border: 2px solid #e2e8f0;
       font-weight: 500;
       transition: all 0.3s ease;
       flex-shrink: 0;
@@ -446,8 +446,8 @@ const handleSubmit = async () => {
       
       .dark & {
         background: var(--color-surface);
-        border-color: var(--social-color, var(--color-border));
-        color: var(--social-color, var(--color-text-secondary));
+        border-color: var(--color-border);
+        color: var(--color-text-secondary);
       }
       
       &:hover {

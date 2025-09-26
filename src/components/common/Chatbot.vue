@@ -829,6 +829,12 @@ onMounted(async () => {
   }
 }
 
+.chatbot__typing-cursor {
+  animation: blink 1s infinite;
+  font-weight: normal;
+  margin-left: 2px;
+}
+
 @keyframes bounce {
   0%, 80%, 100% {
     transform: scale(0);

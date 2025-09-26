@@ -76,7 +76,7 @@ const emit = defineEmits(['view-details', 'view-demo'])
 
 // Check if project has detailed information available
 const hasDetails = computed(() => {
-  return false
+  return  props.project?.details?.length > 10
   /*return !!(
     props.project?.description?.length > 100 || // Has detailed description
     props.project?.achievements?.length > 0 || // Has achievements

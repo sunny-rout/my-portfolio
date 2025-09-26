@@ -165,6 +165,7 @@ onMounted(() => {
     padding: 2.5rem;
     border-radius: 16px;
     border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     width: 100%;
     box-sizing: border-box;
     min-width: 0;
@@ -172,6 +173,7 @@ onMounted(() => {
     .dark & {
       background: var(--color-surface-elevated);
       border-color: var(--color-border);
+      box-shadow: var(--shadow-theme-card);
     }
     
     @media (max-width: 768px) {
@@ -278,9 +280,9 @@ onMounted(() => {
     padding: 2rem;
     border-radius: 16px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #f1f5f9;
     transition: all 0.3s ease;
-    border: 2px solid transparent;
     width: 100%;
     box-sizing: border-box;
     min-width: 0;
@@ -288,11 +290,12 @@ onMounted(() => {
     .dark & {
       background: var(--color-surface-elevated);
       box-shadow: var(--shadow-theme-card);
+      border-color: var(--color-border);
     }
     
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
       border-color: var(--accent-color, #3b82f6);
       
       .dark & {

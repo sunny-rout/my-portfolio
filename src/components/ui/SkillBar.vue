@@ -36,12 +36,22 @@ const props = defineProps({
   background: var(--color-surface);
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: var(--shadow-theme-card);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f1f5f9;
   transition: all 0.3s ease;
   
+  .dark & {
+    box-shadow: var(--shadow-theme-card);
+    border-color: var(--color-border);
+  }
+  
   &:hover {
-    box-shadow: var(--shadow-theme-card-hover);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
     transform: translateY(-2px);
+    
+    .dark & {
+      box-shadow: var(--shadow-theme-card-hover);
+    }
   }
   
   &__info {
@@ -89,9 +99,13 @@ const props = defineProps({
   
   &__progress {
     height: 8px;
-    background: #e2e8f0;
+    background: #f1f5f9;
     border-radius: 4px;
     overflow: hidden;
+    
+    .dark & {
+      background: var(--color-secondary);
+    }
   }
   
   &__fill {

@@ -18,30 +18,12 @@ export class LocalVectorStore {
     try {
       console.log('Loading embedding model...')
       
-      // Try to load the model with timeout
-      const modelPromise = pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
-        progress_callback: (progress) => {
-          console.log('Model loading progress:', progress)
-        }
-      })
-      
-      // Add timeout to prevent hanging
-      const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => reject(new Error('Model loading timeout')), 30000)
-      })
-      
-      this.model = await Promise.race([modelPromise, timeoutPromise])
+      // Use a timeout to prevent the app from hanging if the model can't be loaded
+      this.model = await this.loadModelWithTimeout('Xenova/all-MiniLM-L6-v2', 30000)
       this.isInitialized = true
       console.log('Embedding model loaded successfully')
     } catch (error) {
       console.error('Failed to load embedding model:', error)
-      
-      // Log detailed error information
-      console.error('Error details:', {
-        message: error.message,
-        stack: error.stack,
-        name: error.name
-      })
       
       // Try fallback initialization without model
       console.log('Attempting fallback initialization...')
@@ -49,6 +31,26 @@ export class LocalVectorStore {
     }
   }
   
+  async loadModelWithTimeout(modelName, timeoutMs) {
+    const modelPromise = pipeline('feature-extraction', modelName, {
+      progress_callback: (progress) => {
+        // Optional: Update UI with loading progress
+        console.log(`Model loading progress: ${Math.round(progress.progress)}%`);
+      }
+    });
+
+    let timeoutId;
+    const timeoutPromise = new Promise((_, reject) => {
+      timeoutId = setTimeout(() => {
+        reject(new Error(`Model loading timed out after ${timeoutMs / 1000} seconds. This could be a network issue.`));
+      }, timeoutMs);
+    });
+
+    return Promise.race([modelPromise, timeoutPromise]).finally(() => {
+      clearTimeout(timeoutId);
+    });
+  }
+
   initializeFallback() {
     console.log('Using fallback mode - simple text matching')
     this.model = null

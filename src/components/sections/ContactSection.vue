@@ -378,6 +378,10 @@ const handleSubmit = async () => {
       margin-bottom: 0.25rem;
       font-weight: 500;
       word-wrap: break-word;
+      
+      .dark & {
+        color: var(--color-text-secondary);
+      }
     }
     
     &-value {
@@ -386,6 +390,10 @@ const handleSubmit = async () => {
       text-decoration: none;
       word-wrap: break-word;
       hyphens: auto;
+      
+      .dark & {
+        color: var(--color-text);
+      }
       
       &:hover {
         color: #3b82f6;
@@ -430,6 +438,11 @@ const handleSubmit = async () => {
       font-weight: 500;
       transition: all 0.3s ease;
       flex-shrink: 0;
+      
+      .dark & {
+        background: var(--color-surface);
+        border-color: var(--color-border);
+      }
       
       &:hover {
         background: var(--social-color, #3b82f6);

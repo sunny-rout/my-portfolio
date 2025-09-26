@@ -53,6 +53,10 @@ const props = defineProps({
     margin-bottom: 1rem;
     position: relative;
     
+    .dark & {
+      color: var(--color-text);
+    }
+    
     &::after {
       content: '';
       position: absolute;
@@ -71,6 +75,10 @@ const props = defineProps({
     color: #64748b;
     max-width: 600px;
     margin: 0 auto;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
   }
   
   &__timeline {

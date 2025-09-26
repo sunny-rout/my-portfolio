@@ -131,6 +131,11 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     
+    .dark & {
+      background: var(--color-surface-elevated);
+      box-shadow: var(--shadow-theme-card);
+    }
+    
     &::before {
       content: '';
       position: absolute;
@@ -144,6 +149,10 @@ const props = defineProps({
     &:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      
+      .dark & {
+        box-shadow: var(--shadow-theme-card-hover);
+      }
     }
   }
   
@@ -177,6 +186,10 @@ const props = defineProps({
     color: #1e293b;
     margin-bottom: 1rem;
     line-height: 1.3;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__issuer,
@@ -188,6 +201,10 @@ const props = defineProps({
     font-size: 0.9rem;
     color: #64748b;
     margin-bottom: 0.75rem;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
     
     i {
       color: #94a3b8;
@@ -204,6 +221,10 @@ const props = defineProps({
       color: #1e293b;
       margin-bottom: 0.75rem;
       text-align: center;
+      
+      .dark & {
+        color: var(--color-text);
+      }
     }
     
     &-tags {

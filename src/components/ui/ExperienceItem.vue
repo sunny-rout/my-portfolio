@@ -117,6 +117,10 @@ const props = defineProps({
     font-weight: 700;
     color: #1e293b;
     margin-bottom: 0.5rem;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__company {
@@ -132,6 +136,10 @@ const props = defineProps({
     gap: 0.5rem;
     font-size: 0.9rem;
     color: #64748b;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
     
     i {
       color: #94a3b8;
@@ -150,6 +158,10 @@ const props = defineProps({
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 1rem;
+      
+      .dark & {
+        color: var(--color-text);
+      }
     }
     
     &-list {
@@ -185,6 +197,10 @@ const props = defineProps({
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 1rem;
+      
+      .dark & {
+        color: var(--color-text);
+      }
     }
   }
   

@@ -57,6 +57,10 @@ const props = defineProps({
     gap: 0.75rem;
     font-weight: 600;
     color: #1e293b;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__icon {
@@ -72,6 +76,10 @@ const props = defineProps({
   
   &__years {
     color: #64748b;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
   }
   
   &__level {

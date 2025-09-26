@@ -241,6 +241,10 @@ const handleSubmit = async () => {
     word-wrap: break-word;
     hyphens: auto;
     
+    .dark & {
+      color: var(--color-text);
+    }
+    
     &::after {
       content: '';
       position: absolute;
@@ -260,6 +264,10 @@ const handleSubmit = async () => {
     max-width: 600px;
     margin: 0 auto;
     word-wrap: break-word;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
     
     @media (max-width: 480px) {
       font-size: 1.1rem;
@@ -291,6 +299,10 @@ const handleSubmit = async () => {
     box-sizing: border-box;
     min-width: 0;
     
+    .dark & {
+      background: var(--color-surface-elevated);
+    }
+    
     @media (max-width: 768px) {
       padding: 2rem;
     }
@@ -305,6 +317,10 @@ const handleSubmit = async () => {
       color: #1e293b;
       margin-bottom: 2rem;
       word-wrap: break-word;
+      
+      .dark & {
+        color: var(--color-text);
+      }
       
       @media (max-width: 480px) {
         font-size: 1.3rem;
@@ -383,6 +399,10 @@ const handleSubmit = async () => {
       font-weight: 600;
       color: #1e293b;
       margin-bottom: 1rem;
+      
+      .dark & {
+        color: var(--color-text);
+      }
       
       @media (max-width: 480px) {
         font-size: 1.1rem;
@@ -485,6 +505,10 @@ const handleSubmit = async () => {
     color: #374151;
     margin-bottom: 0.5rem;
     word-wrap: break-word;
+    
+    .dark & {
+      color: var(--color-text);
+    }
   }
   
   &__form-input,
@@ -497,6 +521,16 @@ const handleSubmit = async () => {
     width: 100%;
     box-sizing: border-box;
     min-width: 0;
+    
+    .dark & {
+      background: var(--color-surface);
+      border-color: var(--color-border);
+      color: var(--color-text);
+      
+      &::placeholder {
+        color: var(--color-text-secondary);
+      }
+    }
     
     &:focus {
       outline: none;

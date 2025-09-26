@@ -107,9 +107,19 @@ onUnmounted(() => {
   max-width: 100vw;
   overflow-x: hidden;
   
+  .dark & {
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom-color: var(--color-border);
+  }
+  
   &--scrolled {
     background: rgba(255, 255, 255, 0.98);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    
+    .dark & {
+      background: rgba(15, 23, 42, 0.98);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
   }
   
   &__nav {

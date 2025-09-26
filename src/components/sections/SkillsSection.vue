@@ -117,6 +117,10 @@ onMounted(() => {
     word-wrap: break-word;
     hyphens: auto;
     
+    .dark & {
+      color: var(--color-text);
+    }
+    
     &::after {
       content: '';
       position: absolute;
@@ -136,6 +140,10 @@ onMounted(() => {
     max-width: 600px;
     margin: 0 auto;
     word-wrap: break-word;
+    
+    .dark & {
+      color: var(--color-text-secondary);
+    }
     
     @media (max-width: 480px) {
       font-size: 1.1rem;
@@ -224,6 +232,10 @@ onMounted(() => {
       word-wrap: break-word;
       text-align: center;
       
+      .dark & {
+        color: var(--color-text);
+      }
+      
       i {
         color: #f59e0b;
         flex-shrink: 0;
@@ -306,6 +318,10 @@ onMounted(() => {
       word-wrap: break-word;
       hyphens: auto;
       
+      .dark & {
+        color: var(--color-text);
+      }
+      
       @media (max-width: 480px) {
         font-size: 1.1rem;
       }
@@ -315,6 +331,10 @@ onMounted(() => {
       color: #64748b;
       line-height: 1.6;
       word-wrap: break-word;
+      
+      .dark & {
+        color: var(--color-text-secondary);
+      }
       
       @media (max-width: 480px) {
         font-size: 0.95rem;

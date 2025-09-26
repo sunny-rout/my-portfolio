@@ -38,6 +38,7 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['@xenova/transformers', 'pdfjs-dist/webpack', 'mammoth', 'papaparse', 'marked']
+    include: ['@xenova/transformers', , 'mammoth', 'papaparse', 'marked'],
+    exclude: ['pdfjs-dist']
   }
 })

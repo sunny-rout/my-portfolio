@@ -26,62 +26,13 @@
       </div>
 
       <!-- File Upload Section -->
-      <div v-if="!hasDocuments" class="chatbot__upload-section">
-        <div class="chatbot__upload-area" :class="{ 'chatbot__upload-area--dragover': isDragOver }">
-          <input
-            ref="fileInput"
-            type="file"
-            multiple
-            accept=".pdf,.docx,.doc,.txt,.md,.csv"
-            @change="handleFileUpload"
-            class="chatbot__file-input"
-          >
-          <div 
-            class="chatbot__upload-content"
-            @click="$refs.fileInput.click()"
-            @dragover.prevent="isDragOver = true"
-            @dragleave.prevent="isDragOver = false"
-            @drop.prevent="handleFileDrop"
-          >
-            <i class="fas fa-cloud-upload-alt"></i>
-            <p>Drop files here or click to upload</p>
-            <small>Supports PDF, Word, TXT, Markdown, CSV</small>
-          </div>
-        </div>
-
-        <div v-if="uploadStatus" class="chatbot__upload-status" :class="`chatbot__upload-status--${uploadStatus.type}`">
-          {{ uploadStatus.message }}
-        </div>
-      </div>
-
-      <!-- Document Stats -->
-      <div v-if="hasDocuments" class="chatbot__stats">
-        <div class="chatbot__stats-item">
-          <i class="fas fa-file"></i>
-          <span>{{ vectorStore.getStats().uniqueFiles }} files</span>
-        </div>
-        <div class="chatbot__stats-item">
-          <i class="fas fa-database"></i>
-          <span>{{ vectorStore.getStats().totalDocuments }} chunks</span>
-        </div>
-        <div v-if="vectorStore.getStats().fallbackMode" class="chatbot__stats-item chatbot__stats-item--warning">
-          <i class="fas fa-exclamation-triangle"></i>
-          <span>Fallback mode</span>
-        </div>
-        <button class="chatbot__clear-btn" @click="clearDocuments">
-          <i class="fas fa-trash"></i>
-          Clear
-        </button>
-      </div>
 
       <!-- Chat Messages -->
       <div class="chatbot__messages" ref="messagesContainer">
-        <div v-if="!hasDocuments && !isInitializing" class="chatbot__welcome">
+        <div v-if="messages.length === 0" class="chatbot__welcome">
           <i class="fas fa-robot"></i>
-          <p>Hi! I'm your document assistant. Upload some documents about Sunny to get started, and I'll help you find information from them.
-            <span v-if="vectorStore.getStats().fallbackMode" class="chatbot__fallback-notice">
-              <br><small><i class="fas fa-info-circle"></i> Running in fallback mode with basic text matching.</small>
-            </span>
+          <p>Hi! I'm Sunny's AI assistant. Ask me anything about his experience, skills, projects, or background. 
+            Try questions like "What is Sunny's experience?" or "What technologies does he work with?"
           </p>
         </div>
 
@@ -130,12 +81,12 @@
       </div>
 
       <!-- Input Area -->
-      <div v-if="hasDocuments && !isInitializing" class="chatbot__input-area">
+      <div class="chatbot__input-area">
         <div class="chatbot__input-wrapper">
           <input
             v-model="currentMessage"
             type="text"
-            placeholder="Ask me anything about the documents..."
+            placeholder="Ask me about Sunny's experience, skills, projects..."
             class="chatbot__input"
             @keypress.enter="sendMessage"
             :disabled="isProcessing"

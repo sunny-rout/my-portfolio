@@ -70,6 +70,10 @@ const setActiveFilter = (filter) => {
 const handleViewDetails = (project) => {
   // Handle project details view
   console.log('View project details:', project)
+  const viewDetails = project.details
+   if (viewDetails) {
+    window.open(viewDetails, '_blank', 'noopener,noreferrer')
+  }
 }
 
 const handleViewDemo = (project) => {

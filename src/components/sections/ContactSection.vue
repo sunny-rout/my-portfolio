@@ -426,8 +426,8 @@ const handleSubmit = async () => {
     &-link {
       display: flex;
       align-items: center;
-      height: 45px;
-      width: 45px;
+      height: 55px;
+      width: 55px;
       gap: 0.5rem;
       padding: 0.75rem 1rem;
       background: white;
@@ -438,6 +438,7 @@ const handleSubmit = async () => {
       font-weight: 500;
       transition: all 0.3s ease;
       flex-shrink: 0;
+      font-size: 1.4rem;
       
       .dark & {
         background: var(--color-surface);
@@ -457,8 +458,9 @@ const handleSubmit = async () => {
       }
       
       @media (max-width: 480px) {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
       }
     }
   }

@@ -26,6 +26,7 @@
           :key="project.id"
           :project="project"
           @view-details="handleViewDetails"
+          @view-demo="handleViewDemo"
         />
       </div>
       
@@ -69,6 +70,19 @@ const setActiveFilter = (filter) => {
 const handleViewDetails = (project) => {
   // Handle project details view
   console.log('View project details:', project)
+  const viewDetails = project.details
+  console.log('View details:', viewDetails)
+   if (viewDetails) {
+    window.open(viewDetails, '_blank', 'noopener,noreferrer')
+  }
+}
+
+const handleViewDemo = (project) => {
+  // Handle project demo view
+  const demoUrl = project.demoUrl || project.liveUrl || project.previewUrl || project.githubUrl
+  if (demoUrl) {
+    window.open(demoUrl, '_blank', 'noopener,noreferrer')
+  }
 }
 </script>
 

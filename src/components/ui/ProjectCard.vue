@@ -40,13 +40,23 @@
         <i class="fas fa-chart-line"></i>
         <span>{{ project.impact }}</span>
       </div>
-      
+    </div>
+  
+    <div class="project-card__footer">
       <div class="project-card__actions">
-        <button class="project-card__btn project-card__btn--primary" @click="$emit('view-details', project)">
+        <button 
+          v-if="hasDetails"
+          class="project-card__btn project-card__btn--primary" 
+          @click="$emit('view-details', project)"
+        >
           <i class="fas fa-eye"></i>
           View Details
         </button>
-        <button class="project-card__btn project-card__btn--secondary">
+        <button 
+          v-if="hasDemo"
+          class="project-card__btn project-card__btn--secondary"
+          @click="$emit('view-demo', project)"
+        >
           <i class="fas fa-external-link-alt"></i>
           Demo
         </button>
@@ -56,11 +66,36 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+
 const props = defineProps({
   project: Object
 })
 
-const emit = defineEmits(['view-details'])
+const emit = defineEmits(['view-details', 'view-demo'])
+
+// Check if project has detailed information available
+const hasDetails = computed(() => {
+  return  props.project?.details?.length > 10
+  /*return !!(
+    props.project?.description?.length > 100 || // Has detailed description
+    props.project?.achievements?.length > 0 || // Has achievements
+    props.project?.challenges?.length > 0 || // Has challenges
+    props.project?.detailedDescription || // Has detailed description field
+    props.project?.gallery?.length > 0 || // Has image gallery
+    props.project?.testimonials?.length > 0 // Has testimonials
+  )*/
+})
+
+// Check if project has demo available
+const hasDemo = computed(() => {
+  return !!(
+    props.project?.demoUrl || // Has demo URL
+    props.project?.liveUrl || // Has live URL
+    props.project?.previewUrl || // Has preview URL
+    props.project?.githubUrl // Has GitHub URL for demo
+  )
+})
 </script>
 
 <style lang="scss" scoped>
@@ -71,6 +106,8 @@ const emit = defineEmits(['view-details'])
   border: 1px solid #f1f5f9;
   overflow: hidden;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
   
   .dark & {
     background: var(--color-surface);
@@ -142,6 +179,9 @@ const emit = defineEmits(['view-details'])
   
   &__content {
     padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   
   &__header {
@@ -230,7 +270,8 @@ const emit = defineEmits(['view-details'])
     background: #eff6ff;
     border: 1px solid #dbeafe;
     border-radius: 8px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+    margin-top: auto;
     font-size: 0.9rem;
     color: #1e40af;
     font-weight: 500;
@@ -250,9 +291,22 @@ const emit = defineEmits(['view-details'])
     }
   }
   
+  &__footer {
+    padding: 1.5rem;
+    padding-top: 0;
+    margin-top: auto;
+  }
+  
   &__actions {
     display: flex;
     gap: 0.75rem;
+    
+    // Handle single button case
+    &:has(.project-card__btn:only-child) {
+      .project-card__btn {
+        flex: 1;
+      }
+    }
   }
   
   &__btn {
@@ -268,6 +322,7 @@ const emit = defineEmits(['view-details'])
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    min-width: 120px;
     
     &--primary {
       background: linear-gradient(135deg, #3b82f6, #1d4ed8);
@@ -287,6 +342,20 @@ const emit = defineEmits(['view-details'])
       &:hover {
         border-color: #3b82f6;
         background: #f8fafc;
+        
+        .dark & {
+          background: var(--color-secondary-hover);
+          border-color: #3b82f6;
+        }
+      }
+      
+      .dark & {
+        color: #60a5fa;
+        border-color: var(--color-border);
+        
+        &:hover {
+          border-color: #60a5fa;
+        }
       }
     }
   }

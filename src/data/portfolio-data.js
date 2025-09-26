@@ -178,7 +178,7 @@ export const portfolioData = {
       status: "completed",
       year: "2020-2021",
       featured: false,
-      details: "avast.com/en-in/breachguard"
+      details: "https://avast.com/en-in/breachguard"
     },
     /*{
       id: 2,

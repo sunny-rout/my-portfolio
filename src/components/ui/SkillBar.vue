@@ -33,7 +33,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .skill-bar {
-  background: var(--color-surface);
+  background: white;
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -41,6 +41,7 @@ const props = defineProps({
   transition: all 0.3s ease;
   
   .dark & {
+    background: var(--color-surface);
     box-shadow: var(--shadow-theme-card);
     border-color: var(--color-border);
   }
